@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    {% block title %}<title>hydronote</title>{% endblock %}
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+      <!-- Add additional CSS & JS in static files -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" title="Default style">
+    <script src="{% static 'js/tinymce/tinymce.min.js' %}"></script>
+    <script type="text/javascript">
+        tinymce.init({
+            selector: '#note-text',
+            theme: 'modern',
+            resize: 'both',
+            width: 700,
+            height: 300,
+            plugins: [
+              'advlist autolink link lists charmap preview hr anchor pagebreak',
+              'searchreplace wordcount visualchars code fullscreen insertdatetime nonbreaking emoticons template paste textcolor save'
+            ],
+            //    content_css: 'css/content.css',
+            toolbar: 'save undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | forecolor backcolor emoticons'
+        });
+
+    </script>
+</head>
+
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-2">
+                
+                <!-- List of saved notes -->
+                {% block sidebar %}
+                    {% if note_list %}
+                    <ul class="sidebar-nav">    
+                    {% for note in note_list %}
+                        <li><a href="{{ note.id }}/select_note/">{{ note.note_text }}</a></li>
+                    {% endfor %}
+                    </ul>
+                    {% else %}
+                        <p>No notes are available.</p>
+                    {% endif %}
+                {% endblock %}
+            </div>
+            
+            <div class="col-sm-10">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    
+    </div>
+    
+    
+</body>
+
+</html>
+
