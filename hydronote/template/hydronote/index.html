@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" title="Default style"> 
+    <script src="{% static 'js/tinymce/tinymce.min.js' %}"></script>
+    <script type="text/javascript">
+        tinymce.init({
+            selector: '#note-text',
+            theme: 'modern',
+            resize: 'both',
+            width: 700,
+            height: 300,
+            plugins: [
+              'advlist autolink link lists charmap preview hr anchor pagebreak',
+              'searchreplace wordcount visualchars code fullscreen insertdatetime nonbreaking emoticons template paste textcolor save'
+            ],
+            //    content_css: 'css/content.css',
+            toolbar: 'save undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | forecolor backcolor emoticons'
+        });
+
+    </script>
+</head>
+
+<body>
+    <h1><em>hydronote</em></h1>
+    
+<!-- List of saved notes -->
+{% if note_list %}
+    <ul>    
+    {% for note in note_list %}
+        <li><a href="{{ note.id }}/select_note/">{{ note.note_text }}</a></li>
+    {% endfor %}
+    </ul>
+    
+{% else %}
+    <p>No notes are available.</p>
+{% endif %}
+
+<!--    tinyMCE editing area -->
+    <form action="/hydronote/save_note/" method="post">
+        {% csrf_token %}
+        {{ form.errors }}
+        {{ form.non_field_errors }}
+        <textarea name="text" id="note-text" width="700" height="300">{% if selected_note %}{{ selected_note.note_text }}{% else %}Hello world!{% endif %}</textarea>
+    </form>
+
+</body>
+</html>
