@@ -7,6 +7,7 @@ from .models import Note
 from .forms import NoteForm
 
 def index(request):
+    """Main Hydronote app screen."""
     # list of notes this user has created
     if request.user.is_authenticated():
         note_list = Note.objects.filter(author=request.user)
@@ -48,6 +49,7 @@ def save_note(request):
                 print('note saved: %s' % note)
                 note.note_text = form.cleaned_data['text']
                 note.note_title = form.cleaned_data['note_title']
+                note.modified_date = timezone.now()
             else: # No note selected
                 note = Note(note_text=form.cleaned_data['text'], note_title=form.cleaned_data['note_title'],
                             modified_date=timezone.now(), author=request.user)
