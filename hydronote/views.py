@@ -34,9 +34,7 @@ def save_note(request):
 #        note = Note(note_text=request)
         form = NoteForm(request.POST)
         if form.is_valid():
-            print("FORM IS VALID!!!! text = %s" % form.cleaned_data['text'])
-            
-
+            #print("FORM IS VALID!!!! text = %s" % form.cleaned_data['text'])
             if 'selected_note_id' in request.session:
                 note_id = request.session['selected_note_id']
             else:
