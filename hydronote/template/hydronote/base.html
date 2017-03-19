@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="NoteApp">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,11 +11,21 @@
     <!-- Add static CSS  -->
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/styles.css' %}" title="Default style">
+    
+    <!-- load angular and angular route via CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+    <script src="{% static 'js/app.js' %}"></script>
 </head>
 
 
-<body>
+<body ng-controller="mainController">
     <h1 id="title"><em>hydronote</em></h1>
+    {% verbatim %}
+    <div id="appstuff">
+        {{ message }}
+    </div>
+    {% endverbatim %}
     <div class="container-fluid">
         <div class="row">
             <div id="sidebar-container" class="col-sm-3">
@@ -53,6 +63,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="{% static 'js/tinymce/tinymce.min.js' %}"></script>
+
+
 <script> var stylesheetPath = "{% static 'css/styles.css' %}"</script>
 <script src="{% static 'js/main.js' %}"></script>
 </html>
