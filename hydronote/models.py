@@ -8,6 +8,7 @@ note_number = 1
 class Note(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, help_text="Unique ID")
     note_text = models.CharField(max_length=10000)
+    note_title = models.CharField(max_length=40, null=True, blank=True)
     modified_date = models.DateTimeField('date modified')
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     
@@ -17,6 +18,13 @@ class Note(models.Model):
     # return text without HTML formatting
     def raw_text(self):
         return strip_tags(self.note_text)
+    
+    # title to display in list (either self.title or beginning of text if no title)
+    def list_title(self):
+        if self.note_title == None:
+            return self.__str__()
+        else:
+            return self.note_title
         
 
 class Tag(models.Model):

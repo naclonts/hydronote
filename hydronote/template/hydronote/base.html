@@ -1,22 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <!-- Load bootstrap and jQuery   -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    
-    <!-- Add static CSS & JS -->
     {% block title %}<title>hydronote</title>{% endblock %}
     
+    <!-- Load bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- Add static CSS  -->
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/styles.css' %}" title="Default style">
-    <script src="{% static 'js/tinymce/tinymce.min.js' %}"></script>
-    <script src="{% static 'js/main.js' %}"></script>
 </head>
 
 
@@ -37,7 +31,7 @@
                     {% if note_list %}
                     <ul class="sidebar-nav">    
                     {% for note in note_list %}
-                        <li><a href="{{ note.id }}/select_note/">{{ note }}</a></li>
+                        <li><a href="{{ note.id }}/select_note/">{{ note.list_title }}</a></li>
                     {% endfor %}
                     </ul>
                     {% else %}
@@ -56,4 +50,8 @@
     
 </body>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="{% static 'js/tinymce/tinymce.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
 </html>
