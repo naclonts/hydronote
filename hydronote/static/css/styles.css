@@ -2,3 +2,12 @@ body {
 /*    background-color: #eaeff2; */
     font-family: "Open Sans",Arial,sans-serif;
 }
+
+
+#sidebar-container {
+    margin-top: 50px;
+}
+#title {
+    text-align: left;
+    margin-left: 20px;
+}
