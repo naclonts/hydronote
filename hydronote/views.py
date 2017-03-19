@@ -7,7 +7,10 @@ from .models import Note
 from .forms import NoteForm
 
 def index(request):
-    note_list = Note.objects.all()
+    if request.user.is_authenticated():
+        note_list = Note.objects.filter(author=request.user)
+    else:
+        note_list = None
     
     if 'selected_note_id' in request.session:
         selected_note = Note.objects.get(pk=request.session['selected_note_id'])
@@ -30,11 +33,8 @@ def index(request):
 
 def save_note(request):
     if request.method == "POST":
-        print("~~~~~~~~~~~saving note with id %s" % request.session['selected_note_id']) 
-#        note = Note(note_text=request)
         form = NoteForm(request.POST)
         if form.is_valid():
-            #print("FORM IS VALID!!!! text = %s" % form.cleaned_data['text'])
             if 'selected_note_id' in request.session:
                 note_id = request.session['selected_note_id']
             else:
@@ -45,13 +45,12 @@ def save_note(request):
                 note = Note.objects.get(pk=request.session['selected_note_id'])
                 print('note saved: %s' % note)
                 note.note_text = form.cleaned_data['text']
-                note.save()
             else: # No note selected
                 note = Note(note_text=form.cleaned_data['text'],
-                            modified_date=timezone.now())
+                            modified_date=timezone.now(), author=request.user)
                 print('new note saved: %s' % note)
-                note.save()
                 
+            note.save()
             return HttpResponseRedirect('/hydronote/')
         
         else:
