@@ -11,6 +11,6 @@ urlpatterns = [
     
     # ex. /hydronote/42/select_note/
     url(r'^(?P<note_id>[0-9a-f-]+)/select_note/$', views.select_note, name="select_note"),
-    
-    
+
+
 ]
