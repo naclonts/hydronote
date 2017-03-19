@@ -1,6 +1,7 @@
-body {
+* {
 /*    background-color: #eaeff2; */
     font-family: "Open Sans",Arial,sans-serif;
+/*    font-family: "Lucida Console", Courier, monospace;*/
 }
 
 
@@ -10,4 +11,15 @@ body {
 #title {
     text-align: left;
     margin-left: 20px;
+}
+
+
+#note-title {
+    display: block;
+    margin: 0;
+    width: 95.3%;
+    font-size: 18px;
+    appearance: none;
+    box-shadow: none;
+    border-radius: none;
 }

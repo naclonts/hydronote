@@ -8,7 +8,7 @@
     {{ form.errors }}
     {{ form.non_field_errors }}
     
-    <input type="text" name="note_title" value="{% if selected_note %}{{ selected_note.note_title }}{% endif %}">
+    <input type="text" id="note-title" name="note_title" value="{% if selected_note %}{{ selected_note.note_title }}{% endif %}">
     <textarea name="text" id="note-text" width="700" height="300">{% if selected_note %}{{ selected_note.note_text }}{% else %}Hello world! Write your notes here{% endif %}</textarea>
 </form>
 

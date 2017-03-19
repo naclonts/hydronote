@@ -14,5 +14,8 @@ tinymce.init({
     toolbar: 'save undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | forecolor backcolor emoticons',
     
     // allow users to save even when no changes have been made in tinyMCE editor (since title might've been changed)
-    save_enablewhendirty: false
+    save_enablewhendirty: false,
+    
+    // set up font matching page
+    content_css: stylesheetPath
 });
