@@ -16,6 +16,6 @@ tinymce.init({
     // allow users to save even when no changes have been made in tinyMCE editor (since title might've been changed)
     save_enablewhendirty: false,
     
-    // set up font matching page
+    // Match up font/styling with the rest of page
     content_css: stylesheetPath
 });

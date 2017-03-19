@@ -1,6 +1,6 @@
-* {
-/*    background-color: #eaeff2; */
+body {
     font-family: "Open Sans",Arial,sans-serif;
+    font-size: 16px;
 /*    font-family: "Lucida Console", Courier, monospace;*/
 }
 
@@ -22,4 +22,14 @@
     appearance: none;
     box-shadow: none;
     border-radius: none;
+}
+
+#note-title {
+  padding: 10px;
+  border: solid 2px #c9c9c9;
+  transition: border 0.5s;
+}
+#note-title:focus,
+#note-title.focus {
+  border: solid 2px #969696;
 }
