@@ -19,4 +19,14 @@
 {% endtimezone %}
 {% endif %}
 
+<div ng-controller="{% block ng_controller %}mainController{% endblock %}">
+{% verbatim %}
+    <p>Note list</p>
+    <ul ng-repeat="note in notes">
+            <li>{{ $index }}{{ note.note_title }}</li>
+    </ul>
+{% endverbatim %}
+</div>
+
+
 {% endblock %}

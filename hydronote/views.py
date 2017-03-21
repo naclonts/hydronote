@@ -2,9 +2,14 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.shortcuts import render
 from django.utils import timezone
+from django.contrib.auth.models import User
+
+from rest_framework import generics, permissions, viewsets
 
 from .models import Note
 from .forms import NoteForm
+from .serializers import NoteSerializer
+
 
 def index(request):
     """Main Hydronote app screen."""
@@ -72,5 +77,19 @@ def select_note(request, note_id):
     request.session['selected_note_id'] = note_id
     return HttpResponseRedirect('/hydronote/')
 
+
+class NoteList(generics.ListCreateAPIView):
+    print('~~~~~~~~~~~~~~~~~~~~NoteList ran')
+    model = Note
+    queryset = Note.objects.all()
+    serializer_class = NoteSerializer
+
+    def get_queryset(self):
+        return Note.objects.all()
+
+class NoteViewSet(viewsets.ModelViewSet):
+    queryset = Note.objects.all()
+    serializer_class = NoteSerializer
+    
 
 
