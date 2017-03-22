@@ -1,21 +1,20 @@
 var app = angular.module('NoteApp', [
-    'ngRoute',
     'ui.router'
 ]);
 
-app.constant('BASE_URL', 'http://127.0.0.1:8000/hydronote/');
+app.constant('BASE_URL', 'http://127.0.0.1:8000/hydronote/api/notes/');
 
 
 app.config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
         .state('home', {
             url: '/',
-            templateUrl: '../../template/hydronote/base.html',
+            templateUrl: '/static/templates/home.html',
             controller: 'mainController'
         })
         .state('add-note', {
             url: '/add',
-            templateUrl: 'static/templates/add_note.html',
+            templateUrl: '/static/templates/add_note.html',
             controller: 'mainController'
         });
     
@@ -40,6 +39,7 @@ app.service('Notes', function($http, BASE_URL) {
     var Notes = {};
             
     Notes.all = function() {
+        console.log('----------app.service.Notes.all(): ' + $http.get(BASE_URL));
         return $http.get(BASE_URL);
     };
 
@@ -82,9 +82,14 @@ app.controller('mainController', function($scope, Notes, $state) {
     };
     
     Notes.all().then(function(res) {
+        console.log('Notes.all() completed, results:');
+        console.log(res.data);
         $scope.notes = res.data;
     });
-    console.log("Notes == " + Notes);
+    
+    $scope.message = "hello world!";
+    
+    console.log('mainController finished; $scope.notes == ' + $scope.notes);
 });
 
 
