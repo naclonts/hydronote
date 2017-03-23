@@ -1,7 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.shortcuts import render
-from django.utils import timezone
 from django.contrib.auth.models import User
 from django.http import Http404
 
@@ -30,10 +29,17 @@ class NoteList(APIView):
         return Response(serializer.data)
     
     def post(self, request):
+        print("~~~~~~~~~~calling NoteList.post")
+        print(request.data)
+        
+#        note = Note(request.data)
         serializer = NoteSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            print('~~~~~~~~~~~~is valid')
+            serializer.save(author=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+        print('~~~~~~~~~~~~is not valid! errors:')
+        print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 

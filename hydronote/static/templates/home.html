@@ -3,11 +3,14 @@
     
 <!--    List of notes to choose from -->
     <ul ng-repeat="note in notes">
-        <li><a href ng-click="selectNote(note.id)">{{$index}}{{ note.note_title }}</a></li>
+        <li><a href ng-click="selectNote(note.id)">{{ note.note_title }}</a></li>
     </ul>
     
+<!--    Create Note button -->
+    <button ng-click="addNote()" id="create-note">New Note</button>
+    
 <!--    Note title -->
-    <input type="text" value="{{ currentNote.note_title }}">
+    <input id="note-title" type="text" value="{{ currentNote.note_title }}">
 
 <!--    Note editing area (tinyMCE WYSIWYG editor) -->
     <textarea ui-tinymce="tinymceOptions" ng-model="currentNote.note_text"></textarea>

@@ -1,8 +1,8 @@
 import uuid
 from django.db import models
 from django.utils.html import strip_tags
-from django.utils import timezone
 from django.contrib.auth.models import User
+from django.utils.timezone import now
 
 
 class Note(models.Model):
@@ -11,7 +11,7 @@ class Note(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, help_text="Unique ID")
     note_text = models.CharField(max_length=10000)
     note_title = models.CharField(max_length=40, null=True, blank=True)
-    modified_date = models.DateTimeField('date modified')
+    modified_date = models.DateTimeField('date modified', auto_now=True)
     
     def __str__(self):
         return self.raw_text()[0:30]

@@ -11,17 +11,15 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
     
+    // Set head so Django understands POST format
+    $httpProvider.defaults.headers.post['CONTENT-TYPE'] =
+        'application/x-www-form-urlencoded';
     
     // Set up templating URLs
     $stateProvider
         .state('home', {
             url: '/',
             templateUrl: '/static/templates/home.html',
-            controller: 'mainController'
-        })
-        .state('add-note', {
-            url: '/add',
-            templateUrl: '/static/templates/add_note.html',
             controller: 'mainController'
         });
     
@@ -50,7 +48,7 @@ app.service('Notes', function($http, BASE_URL) {
         return $http.delete(BASE_URL + id + '/');
     };
 
-    Notes.addOne = function(newNote) {
+    Notes.add = function(newNote) {
         return $http.post(BASE_URL, newNote);
     };
 
@@ -60,15 +58,14 @@ app.service('Notes', function($http, BASE_URL) {
 
 app.controller('mainController', function($scope, Notes, $state) {
     // Set up Note controls
-    $scope.newNote = {};
     $scope.currentNote = "";
     
     $scope.addNote = function() {
-        Notes.addOne($scope.newNote)
-            .then(function(res) {
-                // redirect to home page once added
-                $state.go('home');
-            });
+        newNote = { note_title: document.getElementById('note-title').value,
+                    note_text: 'test text' };
+        console.log(newNote);
+        Notes.add(newNote);
+        
     };
     
     $scope.selectNote = function(id) {
