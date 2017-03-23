@@ -1,10 +1,15 @@
 <body ng-controller="mainController">
     <p>{{ message }}</p>
     
+<!--    List of notes to choose from -->
     <ul ng-repeat="note in notes">
         <li><a href ng-click="selectNote(note.id)">{{$index}}{{ note.note_title }}</a></li>
     </ul>
     
+<!--    Note title -->
+    <input type="text" value="{{ currentNote.note_title }}">
+
+<!--    Note editing area (tinyMCE WYSIWYG editor) -->
     <textarea ui-tinymce="tinymceOptions" ng-model="currentNote.note_text"></textarea>
     
     

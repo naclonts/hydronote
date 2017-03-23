@@ -6,7 +6,13 @@ var app = angular.module('NoteApp', [
 app.constant('BASE_URL', 'http://127.0.0.1:8000/hydronote/api/notes/');
 
 
-app.config(function($stateProvider, $urlRouterProvider) {
+app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+    // Set CSRF token cookies to match Django's defaults
+    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+    
+    
+    // Set up templating URLs
     $stateProvider
         .state('home', {
             url: '/',
@@ -28,8 +34,6 @@ app.service('Notes', function($http, BASE_URL) {
     var Notes = {};
             
     Notes.all = function() {
-        console.log('----------app.service.Notes.all(): '
-                    + $http.get(BASE_URL));
         return $http.get(BASE_URL);
     };
     
@@ -38,6 +42,7 @@ app.service('Notes', function($http, BASE_URL) {
     };
 
     Notes.update = function(updatedNote) {
+        console.log('PUT to ' + BASE_URL + updatedNote.id + '/');
         return $http.put(BASE_URL + updatedNote.id + '/', updatedNote);
     };
 
