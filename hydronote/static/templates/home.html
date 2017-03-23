@@ -1,10 +1,11 @@
 <body ng-controller="mainController">
-    <h1 id="title"><em>hydronote</em></h1>
-
     <p>{{ message }}</p>
     
     <ul ng-repeat="note in notes">
-        <li>{{$index}}{{ note.note_text }}</li>
+        <li><a href ng-click="selectNote(note.id)">{{$index}}{{ note.note_title }}</a></li>
     </ul>
+    
+    <textarea ui-tinymce="tinymceOptions" ng-model="currentNote.note_text"></textarea>
+    
     
 </body>

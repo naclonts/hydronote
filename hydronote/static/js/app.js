@@ -1,5 +1,6 @@
 var app = angular.module('NoteApp', [
-    'ui.router'
+    'ui.router',
+    'ui.tinymce'
 ]);
 
 app.constant('BASE_URL', 'http://127.0.0.1:8000/hydronote/api/notes/');
@@ -21,30 +22,23 @@ app.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
 });
 
-//app.config(function($routeProvider) {
-//    $routeProvider
-//    
-//        // route for the home page
-//        .when('/', {
-//            templateUrl: 'pages/index.htm',
-//            controller: 'mainController'
-//        });
-//});
-// Create controller & inject $scope
-//app.controller('mainController', function($scope) {
-//    $scope.message = 'Ho there';
-//});
+
 
 app.service('Notes', function($http, BASE_URL) {
     var Notes = {};
             
     Notes.all = function() {
-        console.log('----------app.service.Notes.all(): ' + $http.get(BASE_URL));
+        console.log('----------app.service.Notes.all(): '
+                    + $http.get(BASE_URL));
         return $http.get(BASE_URL);
+    };
+    
+    Notes.get = function(id) {
+        return $http.get(BASE_URL + id + '/');
     };
 
     Notes.update = function(updatedNote) {
-        return $http.put(BASE_URL + updatedNote.id, updatedNote);
+        return $http.put(BASE_URL + updatedNote.id + '/', updatedNote);
     };
 
     Notes.delete = function(id) {
@@ -60,7 +54,10 @@ app.service('Notes', function($http, BASE_URL) {
 
 
 app.controller('mainController', function($scope, Notes, $state) {
+    // Set up Note controls
     $scope.newNote = {};
+    $scope.currentNote = "";
+    
     $scope.addNote = function() {
         Notes.addOne($scope.newNote)
             .then(function(res) {
@@ -69,8 +66,17 @@ app.controller('mainController', function($scope, Notes, $state) {
             });
     };
     
-    $scope.saveNote = function(note) {
-        Notes.update(note);
+    $scope.selectNote = function(id) {
+        Notes.get(id).then(function(res) {
+            $scope.currentNote = res.data;
+        });
+    };
+    
+    // Save note on submission of tinyMCE form
+    $scope.saveNote = function() {
+        console.log('-----------saving note:');
+        console.log($scope.currentNote);
+        Notes.update($scope.currentNote);   
     };
     
     $scope.deleteNote = function(id) {
@@ -82,24 +88,32 @@ app.controller('mainController', function($scope, Notes, $state) {
     };
     
     Notes.all().then(function(res) {
-        console.log('Notes.all() completed, results:');
-        console.log(res.data);
         $scope.notes = res.data;
     });
     
-    $scope.message = "hello world!";
     
-    console.log('mainController finished; $scope.notes == ' + $scope.notes);
+    // Set up editor controls
+    $scope.tinymceModel = "Write your note here!";
+    
+    $scope.tinymceOptions = {
+        theme: 'modern',
+        resize: 'both',
+        width: "70%",
+        height: 200,
+        plugins: [
+          'advlist autolink link lists charmap preview hr anchor pagebreak',
+          'searchreplace wordcount visualchars code fullscreen insertdatetime nonbreaking emoticons template paste textcolor save'
+        ],
+        //    content_css: 'css/content.css',
+        toolbar: 'save undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | forecolor backcolor emoticons',
+
+        // allow users to save even when no changes have been made in tinyMCE editor (since title might've been changed)
+        save_enablewhendirty: false,
+
+        // Match up font/styling with the rest of page
+        content_css: stylesheetPath,
+        
+        save_onsavecallback: function() { $scope.saveNote(); }
+    };
+    
 });
-
-
-//app.controller('mainController', [
-//    '$scope', '$http', function($scope, $http) {
-//        $scope.notes = [];
-//        return $http.get('/hydronote/nathan/notes/').then(function(result) {
-//            return angular.forEach(result.data, function (item) {
-//                return $scope.notes.push(item);
-//            });
-//        });
-//    }
-//]);
