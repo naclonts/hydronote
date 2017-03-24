@@ -27,7 +27,6 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 });
 
 
-
 app.service('Notes', function($http, BASE_URL) {
     var Notes = {};
             
@@ -96,6 +95,9 @@ app.controller('mainController', function($scope, Notes, $state) {
 
     // Delete selected note
     $scope.deleteNote = function() {
+        // If default new note is loaded (not in DB), skip
+        if (!$scope.currentNote.id) return;
+        
         id = $scope.currentNote.id;
         Notes.delete(id);
 
@@ -118,8 +120,8 @@ app.controller('mainController', function($scope, Notes, $state) {
     $scope.tinymceOptions = {
         theme: 'modern',
         resize: 'both',
-        width: "70%",
-        height: 200,
+        height: '400px',
+        
         plugins: [
           'advlist autolink link lists charmap preview hr anchor pagebreak',
           'searchreplace wordcount visualchars code fullscreen insertdatetime nonbreaking emoticons template paste textcolor save'

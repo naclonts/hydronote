@@ -2,13 +2,15 @@
 {% load static %}
 <html ng-app='NoteApp'>
     <head>
-        <title>Let's get djangular</title>
+        <title>hydronote</title>
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     </head>
 
     <body>
-        <h1 id="title">hydronote</h1>
+        <div id="menu-container">
+            <h1 id="title">hydronote</h1>
+        </div>
         <div ui-view></div>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.js"></script>

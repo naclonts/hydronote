@@ -1,35 +1,100 @@
 body {
     font-family: "Open Sans",Arial,sans-serif;
     font-size: 16px;
-/*    font-family: "Lucida Console", Courier, monospace;*/
 }
 
-
-.sidebar-nav {
-    margin-top: 50px;
+#menu-container {
+/*    width: 100%;*/
+    border-style: solid;
+    border-color: #696969;
+    background-color: dimgray;
+    padding: 0px;
 }
+
 #title {
-    text-align: left;
-    margin-left: 20px;
+    margin: 10px 10px 10px 20px;
+    color: white;
+    font-size: 3em;
+    padding: 0px;
 }
 
+
+#application-container {
+/*    width: 100%;*/
+    background: #e3e3e3;
+    margin: auto;
+    padding: 5px;
+}
+
+#sidebar-container {
+    width: 20%;
+    height: auto;
+    float: left;
+    background: #f7f7f7;
+}
+
+#editor-container {
+    margin-left: 20%;
+    padding: 5px;
+}
+
+#input-control {
+    text-align: justify;
+}
+
+#input-control:after {
+    content: "";
+    width: 100%;
+    display: inline-block;
+}
 
 #note-title {
-    display: block;
-    margin: 0;
-    width: 95.3%;
+    width: 50%;
     font-size: 18px;
     appearance: none;
     box-shadow: none;
-    border-radius: none;
+    border-radius: 0px;
+
+    padding: 10px;
+    border: solid 2px #c9c9c9;
+    transition: border 1.5s;
 }
 
-#note-title {
-  padding: 10px;
-  border: solid 2px #c9c9c9;
-  transition: border 0.5s;
-}
 #note-title:focus,
 #note-title.focus {
-  border: solid 2px #969696;
+    border: solid 2px #969696;
+}
+
+#create-note, #delete-note {
+    height: 40px;
+    vertical-align: middle;
+    box-shadow: 1px;
+    border: none;
+}
+
+#create-note {
+    width: 30%;
+  background: #11537e;
+  border-radius: 0px;
+  color: #efefef;
+  font-size: 18px;
+  text-decoration: none;
+}
+
+#create-note:hover {
+  background: #3cb0fd;
+  text-decoration: none;
+}
+
+#delete-note {
+  background: #11537e;
+  border-radius: 0px;
+  color: #efefef;
+  font-size: 18px;
+  text-decoration: none;
+}
+
+#delete-note:hover {
+  background: #ef653b;
+  text-decoration: none;
 }

@@ -1,22 +1,33 @@
 <body ng-controller="mainController">
     <p>{{ message }}</p>
     
-<!--    List of notes to choose from -->
-    <ul ng-repeat="note in notes">
-        <li><a href ng-click="selectNote(note.id)">{{ note.note_title }}</a></li>
-    </ul>
-    
-<!--    Create Note button -->
-    <button ng-click="addNote()" id="create-note">New Note</button>
-    
-<!--    Delete selected note button -->
-    <button ng-click="deleteNote()" id="delete-note">Delete</button>
-    
-<!--    Note title -->
-    <input id="note-title" type="text" ng-model="currentNote.note_title">
+    <section id="application-container">
+        <!--    List of notes to choose from -->
+        <div id="sidebar-container">
+            <ul class="sidebar-notelist" ng-repeat="note in notes">
+                <li><a href ng-click="selectNote(note.id)">{{ note.note_title
+                    ? note.note_title : '[Untitled]' }}</a></li>
+            </ul>
+        </div>
 
-<!--    Note editing area (tinyMCE WYSIWYG editor) -->
-    <textarea ui-tinymce="tinymceOptions" ng-model="currentNote.note_text"></textarea>
-    
+        <!--    Editor and buttons    -->
+        <div id="editor-container">
+            <div id="input-control">
+            <!--    Note title -->
+                <input id="note-title" type="text" ng-model="currentNote.note_title">
+
+            <!--    Create Note button -->
+                <button id="create-note" ng-click="addNote()">Create</button>
+
+            <!--    Delete selected note button -->
+                <button id="delete-note" ng-click="deleteNote()" >Delete</button>
+            </div>
+                
+                
+        <!--    Note editing area (tinyMCE WYSIWYG editor) -->
+            <textarea id="editor" ui-tinymce="tinymceOptions" ng-model="currentNote.note_text"></textarea>
+            
+        </div>
+    </section>
     
 </body>
