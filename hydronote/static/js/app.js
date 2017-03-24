@@ -39,8 +39,7 @@ app.service('Notes', function($http, BASE_URL) {
         return $http.get(BASE_URL + id + '/');
     };
 
-    Notes.update = function(updatedNote) {
-        console.log('PUT to ' + BASE_URL + updatedNote.id + '/');
+    Notes.save = function(updatedNote) {
         return $http.put(BASE_URL + updatedNote.id + '/', updatedNote);
     };
 
@@ -57,42 +56,61 @@ app.service('Notes', function($http, BASE_URL) {
 
 
 app.controller('mainController', function($scope, Notes, $state) {
-    // Set up Note controls
-    $scope.currentNote = "";
+    $scope.currentNote = {};
     
-    $scope.addNote = function() {
-        newNote = { note_title: document.getElementById('note-title').value,
-                    note_text: 'test text' };
-        console.log(newNote);
-        Notes.add(newNote);
-        
+    // Refresh list of notes 
+    updateList = function() {
+        return Notes.all().then(function(res) {
+            $scope.notes = res.data;
+        });
     };
     
+    // Select a note to begin editing 
     $scope.selectNote = function(id) {
         Notes.get(id).then(function(res) {
             $scope.currentNote = res.data;
         });
     };
     
+    // Create a blank note object (with no ID) and assign to $scope.currentNote
+    $scope.addNote = function() {
+        newNote = { note_title: 'A New Note',
+                    note_text: '<i>Inspired thoughts go here!<i>' };
+        $scope.currentNote = newNote;        
+    };
+
     // Save note on submission of tinyMCE form
     $scope.saveNote = function() {
         console.log('-----------saving note:');
-        console.log($scope.currentNote);
-        Notes.update($scope.currentNote);   
+        // If selected note already exists, update in database
+        if ($scope.currentNote.hasOwnProperty('id')) {
+            Notes.save($scope.currentNote).then(updateList);
+        // If it's a brand new note (not yet in DB), add to database
+        } else {
+            Notes.add($scope.currentNote).then(function(res) {
+                $scope.currentNote = res.data;
+                updateList();
+            });
+        }
     };
-    
-    $scope.deleteNote = function(id) {
+
+    // Delete selected note
+    $scope.deleteNote = function() {
+        id = $scope.currentNote.id;
         Notes.delete(id);
-        // update the list in UI
+
+        // filter the note list to exclude the deleted item
         $scope.notes = $scope.notes.filter(function(note) {
             return note.id !== id;
         });
+        
+        // create a fresh new note
+        $scope.addNote();
     };
     
-    Notes.all().then(function(res) {
-        $scope.notes = res.data;
-    });
-    
+    // On initial run, load the list of user's notes
+    // TODO: select the last modified
+    updateList().then($scope.addNote);
     
     // Set up editor controls
     $scope.tinymceModel = "Write your note here!";
@@ -106,16 +124,16 @@ app.controller('mainController', function($scope, Notes, $state) {
           'advlist autolink link lists charmap preview hr anchor pagebreak',
           'searchreplace wordcount visualchars code fullscreen insertdatetime nonbreaking emoticons template paste textcolor save'
         ],
-        //    content_css: 'css/content.css',
+        
         toolbar: 'save undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | forecolor backcolor emoticons',
+        
+        // Call save function when editor's Save button is clicked 
+        save_onsavecallback: function() { $scope.saveNote(); },
 
         // allow users to save even when no changes have been made in tinyMCE editor (since title might've been changed)
         save_enablewhendirty: false,
 
         // Match up font/styling with the rest of page
-        content_css: stylesheetPath,
-        
-        save_onsavecallback: function() { $scope.saveNote(); }
+        content_css: stylesheetPath  
     };
-    
 });

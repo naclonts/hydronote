@@ -9,8 +9,11 @@
 <!--    Create Note button -->
     <button ng-click="addNote()" id="create-note">New Note</button>
     
+<!--    Delete selected note button -->
+    <button ng-click="deleteNote()" id="delete-note">Delete</button>
+    
 <!--    Note title -->
-    <input id="note-title" type="text" value="{{ currentNote.note_title }}">
+    <input id="note-title" type="text" ng-model="currentNote.note_title">
 
 <!--    Note editing area (tinyMCE WYSIWYG editor) -->
     <textarea ui-tinymce="tinymceOptions" ng-model="currentNote.note_text"></textarea>
