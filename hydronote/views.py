@@ -1,6 +1,8 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.shortcuts import render
+from django.conf import settings
+from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.http import Http404
 
@@ -10,7 +12,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Note
-from .forms import NoteForm
+from .forms import NoteForm, UserForm
 from .serializers import NoteSerializer
 
 
@@ -18,6 +20,20 @@ from .serializers import NoteSerializer
 def index(request):
     return render(request, 'hydronote/base_angular.html')
 
+
+def add_user(request):
+    """Account creation view. Routes to login page on success."""
+    if request.method == "POST":
+        form = UserForm(request.POST)
+        if form.is_valid():
+            new_user = User.objects.create_user(**form.cleaned_data)
+            return HttpResponseRedirect('/accounts/login')
+
+    else:
+        form = UserForm()
+        
+    return render(request, 'add_user.html', {'form': form})
+            
 
 class NoteList(APIView):
     """

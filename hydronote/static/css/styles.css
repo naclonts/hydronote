@@ -1,6 +1,8 @@
 body {
     font-family: "Open Sans",Arial,sans-serif;
     font-size: 16px;
+/*    background: hsl(238, 27%, 67%);  */
+/*    background: linear-gradient(to left, hsl(238, 13%, 80%), hsl(238, 4%, 90%));*/
 }
 
 #menu-container {
@@ -14,25 +16,12 @@ body {
 
 #title {
     margin: 10px 10px 10px 20px;
-    
     font-size: 3em;
     padding: 0px;
     float: left;
 }
 
-#user-info {
-    float: right;
-    margin: 10px 20px 0px 0px;
-    list-style: none;
-}
 
-.log-link:link {
-    color: white;
-}
-
-.log-link:visited {
-    color: #d1d1d1;
-}
 
 
 #application-container {
@@ -127,14 +116,17 @@ body {
     float: left;
 }
 
-#username-container {
-    width: 70%;
-    box-sizing: border-box;
+
+#user-info {
+    float: right;
+    margin: 15px 20px 0px 0px;
+    list-style: none;
 }
 
-#password-container {
-    float: left;
-    top: 100px;
-    width: 40%;
-    box-sizing: border-box;
+.log-link:link {
+    color: white;
+}
+
+.log-link:visited {
+    color: #d1d1d1;
 }

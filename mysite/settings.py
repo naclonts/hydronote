@@ -59,7 +59,10 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['./hydronote/template/', './templates/', './hydronote/template/hydronote/'],
+        'DIRS': [
+            './hydronote/template/',
+            './templates/',
+            './hydronote/template/hydronote/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

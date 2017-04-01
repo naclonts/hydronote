@@ -120,10 +120,15 @@ app.controller('mainController', function($scope, Notes, $state) {
     // Set up editor controls
     $scope.tinymceModel = "Write your note here!";
     
+    tinySetup = function(ed) {
+        console.log("coloring....");
+        ed.getBody().style.backgroundColor = '#fff';
+    };
     $scope.tinymceOptions = {
         theme: 'modern',
         resize: 'both',
         height: '400px',
+        background: 'white',
         
         plugins: [
           'advlist autolink link lists charmap preview hr anchor pagebreak',
@@ -139,6 +144,15 @@ app.controller('mainController', function($scope, Notes, $state) {
         save_enablewhendirty: false,
 
         // Match up font/styling with the rest of page
-        content_css: stylesheetPath  
+        content_css: stylesheetPath, 
+        
+        setup: function (ed) {
+            ed.on('init', function(e) {
+                console.log('init called');
+                tinymce.activeEditor.contentDocument.body.style.backgroundColor = '#fff';
+            });
+        }
     };
+//    tinySetup();
+
 });

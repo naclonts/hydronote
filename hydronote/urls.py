@@ -6,6 +6,8 @@ from . import views
 app_name = 'hydronote'
 urlpatterns = [
     url(r'^$', views.index, name='index'),
+    
+    url('add_user/', views.add_user, name="add_user"),
 
     url(r'^api/notes/$', views.NoteList.as_view()),
     
