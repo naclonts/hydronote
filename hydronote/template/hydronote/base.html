@@ -1,71 +1,27 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en" ng-app="NoteApp">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% block title %}<title>hydronote</title>{% endblock %}
-    
-    <!-- Load bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-    <!-- Add static CSS  -->
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}" title="Default style">
-    
-    <!-- load angular and angular route via CDN -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
-    <script src="https://unpkg.com/angular-ui-router@1.0.0-rc.1/release/angular-ui-router.js"></script>
-    <script src="{% static 'js/app.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
-
-
-<body ng-controller="mainController">
-    <h1 id="title"><em>hydronote</em></h1>
-    {% verbatim %}
-    <div id="appstuff">
-        {{ message }}
-    </div>
-    {% endverbatim %}
-    <div class="container-fluid">
-        <div class="row">
-            <div id="sidebar-container" class="col-sm-3">
-                {% if user.is_authenticated %}
-                    <li>User: {{ user.get_username }}</li>
-                    <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
-                {% else %}
-                    <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
-                {% endif %}
-                
-                <!-- List of saved notes -->
-                {% block sidebar %}
-                    {% if note_list %}
-                    <ul class="sidebar-nav">    
-                    {% for note in note_list %}
-                        <li><a href="{{ note.id }}/select_note/">{{ note.list_title }}</a></li>
-                    {% endfor %}
-                    </ul>
-                    {% else %}
-                        <p>No notes are available.</p>
-                    {% endif %}
-                {% endblock %}
-            </div>
-            
-            <div class="col-sm-9">
-                {% block content %}{% endblock %}
-            </div>
+    
+<body>
+    <div id="menu-container">
+        <h1 id="title">hydronote</h1>
+        <div id="user-info">{% if user.is_authenticated %}
+            <li>{{ user.username }}</li>
+            <li><a class="log-link" href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
+            {% else %}
+            <li><a class="log-link" href="{% url 'login'%}?next={{request.path}}">Login</a></li>
+            {% endif %}
         </div>
-    
     </div>
-    
-    
 </body>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="{% static 'js/tinymce/tinymce.min.js' %}"></script>
+{% block content %}{% endblock %}
 
-
-<script> var stylesheetPath = "{% static 'css/styles.css' %}"</script>
-<script src="{% static 'js/main.js' %}"></script>
 </html>

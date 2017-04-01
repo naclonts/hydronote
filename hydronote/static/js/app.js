@@ -76,11 +76,13 @@ app.controller('mainController', function($scope, Notes, $state) {
         newNote = { note_title: 'A New Note',
                     note_text: '<i>Inspired thoughts go here!<i>' };
         $scope.currentNote = newNote;        
+        $scope.message = '';
     };
 
     // Save note on submission of tinyMCE form
     $scope.saveNote = function() {
-        console.log('-----------saving note:');
+        $scope.message = 'Note saved';
+
         // If selected note already exists, update in database
         if ($scope.currentNote.hasOwnProperty('id')) {
             Notes.save($scope.currentNote).then(updateList);
@@ -108,6 +110,7 @@ app.controller('mainController', function($scope, Notes, $state) {
         
         // create a fresh new note
         $scope.addNote();
+        $scope.message = 'Note deleted';
     };
     
     // On initial run, load the list of user's notes
