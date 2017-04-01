@@ -12,6 +12,7 @@ class Note(models.Model):
     note_text = models.CharField(max_length=10000)
     note_title = models.CharField(max_length=40, null=True, blank=True)
     modified_date = models.DateTimeField('date modified', auto_now=True)
+    session_key = models.CharField(max_length=40)
     
     def __str__(self):
         return self.raw_text()[0:30]

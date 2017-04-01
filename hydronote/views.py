@@ -18,6 +18,8 @@ from .serializers import NoteSerializer
 
 # Home route
 def index(request):
+    if not request.session.session_key:
+        request.session.save()
     return render(request, 'hydronote/base_angular.html')
 
 
@@ -41,22 +43,27 @@ class NoteList(APIView):
     """
     def get(self, request, format=None):
         """Get list with all of user's notes."""
-        notes = Note.objects.all().filter(author__username=self.request.user)
+        # Filter based on username, or session key for anonymous users
+        if request.user.is_authenticated():
+            notes = Note.objects.all().filter(author__username=self.request.user)
+        else:
+            notes = Note.objects.all().filter(session_key=request.session.session_key)
+        
         serializer = NoteSerializer(notes, many=True)
         return Response(serializer.data)
     
     def post(self, request):
-        """Create a new note."""
-        print("~~~~~~~~~~calling NoteList.post")
-        print(request.data)
-        
-#        note = Note(request.data)
+        """Create a new note.""" 
         serializer = NoteSerializer(data=request.data)
         if serializer.is_valid():
-            print('~~~~~~~~~~~~is valid')
-            serializer.save(author=request.user)
+            # Save under user, or session key for Anonymous
+            if request.user.is_authenticated():
+                serializer.save(author = request.user, session_key = request.session.session_key)
+            else:
+                print(request.session.session_key)
+                serializer.save(session_key = request.session.session_key, author = None)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        print('~~~~~~~~~~~~is not valid! errors:')
+
         print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -78,7 +85,6 @@ class NoteDetail(APIView):
         return Response(serializer.data)
     
     def put(self, request, pk, format=None):
-        print("--------------NoteDetail.put called")
         note = self.get_object(pk)
         serializer = NoteSerializer(note, data=request.data)
         if serializer.is_valid():
