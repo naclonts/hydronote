@@ -117,3 +117,24 @@ body {
   background: #ef653b;
   text-decoration: none;
 }
+
+#login-form {
+    width: 100%;
+    float: left;
+}
+
+#login-button {
+    float: left;
+}
+
+#username-container {
+    width: 70%;
+    box-sizing: border-box;
+}
+
+#password-container {
+    float: left;
+    top: 100px;
+    width: 40%;
+    box-sizing: border-box;
+}
