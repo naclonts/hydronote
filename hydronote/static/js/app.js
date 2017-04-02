@@ -153,6 +153,4 @@ app.controller('mainController', function($scope, Notes, $state) {
             });
         }
     };
-//    tinySetup();
-
 });

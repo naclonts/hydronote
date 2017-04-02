@@ -18,8 +18,10 @@ from .serializers import NoteSerializer
 
 # Home route
 def index(request):
+    # Hack to ensure sessions are being saved for anonymous users
     if not request.session.session_key:
         request.session.save()
+        
     return render(request, 'hydronote/base_angular.html')
 
 
@@ -60,7 +62,6 @@ class NoteList(APIView):
             if request.user.is_authenticated():
                 serializer.save(author = request.user, session_key = request.session.session_key)
             else:
-                print(request.session.session_key)
                 serializer.save(session_key = request.session.session_key, author = None)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 

@@ -3,7 +3,7 @@
 
 {% block extended_head %}
 <head>
-    <link rel="stylesheet" href="{% static 'css/login-page.css' %}">
+    <link rel="stylesheet" href="{% static 'css/form-page.css' %}">
 </head>
 {% endblock %}
 
@@ -14,7 +14,7 @@
 <p>Your username and password didn't match. Please try again.</p>
 {% endif %}
 
-<div class="login-page">
+<div class="form-page">
 <div class="form" id="login-form">
     <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
@@ -31,9 +31,7 @@
         <input type="hidden" name="next" value="" />
     </form>
 
-    {# Assumes you setup the password_reset view in your URLconf #}
-    <div id="create-or-lost"><a href="/hydronote/add_user">Create an account | </a>
-        <a href="{% url 'password_reset' %}">Lost password</a></div>
+    <div id="create-or-lost"><a href="/hydronote/add_user/">Create an account</a></div>
 </div>
 </div>
 

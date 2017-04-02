@@ -5,6 +5,15 @@ body {
 /*    background: linear-gradient(to left, hsl(238, 13%, 80%), hsl(238, 4%, 90%));*/
 }
 
+
+/* Menu */
+#title {
+    margin: 10px 10px 10px 20px;
+    font-size: 3em;
+    padding: 0px;
+    float: left;
+}
+
 #menu-container {
     border-style: solid;
     border-color: #696969;
@@ -14,14 +23,37 @@ body {
     height: 70px;
 }
 
-#title {
-    margin: 10px 10px 10px 20px;
-    font-size: 3em;
-    padding: 0px;
+#menu-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu-item {
     float: left;
 }
 
+.menu-item a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    margin: 15px 20px 0px 0px;
+    text-decoration: none;
+}
 
+#user-info {
+    float: right;
+    margin: 15px 20px 0px 0px;
+    list-style: none;
+}
+
+.log-link:link {
+    color: white;
+}
+.log-link:visited {
+    color: #d1d1d1;
+}
 
 
 #application-container {
@@ -117,16 +149,40 @@ body {
 }
 
 
-#user-info {
+
+/* Modal "About" pop-up */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaa;
     float: right;
-    margin: 15px 20px 0px 0px;
-    list-style: none;
+    font-size: 28px;
+    font-weight: bold;
 }
 
-.log-link:link {
-    color: white;
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }
 
-.log-link:visited {
-    color: #d1d1d1;
-}

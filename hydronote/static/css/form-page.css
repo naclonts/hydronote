@@ -3,14 +3,13 @@ body {
     background: linear-gradient(to left, hsl(238, 13%, 80%), hsl(238, 4%, 90%));
 }
 
-.login-page {
+.form-page {
     width: 360px;
     padding: 8%;
     margin: auto;
 }
 .form {
     position: relative;
-    z-index: 1;
     background: #f2f2f2;
     max-width: 360px;
     margin: 05px auto 100px;
@@ -58,7 +57,6 @@ body {
 }
 .container {
     position: relative;
-    z-index: 1;
     max-width: 300px;
     margin: 0 auto;
 }
