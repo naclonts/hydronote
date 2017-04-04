@@ -23,12 +23,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '*6xpilm5+0ap0b!%96+0-pnv306d_f6q^(65&g)1-6$yk6ta!q'
+SECRET_KEY = secret_settings.DJANGO_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['www.nathanclonts.com', '.nathanclonts.com', '.nathanclonts.com.', '45.55.66.186', ]
 
 
 # Application definition
@@ -60,9 +60,10 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            './hydronote/template/',
-            './templates/',
-            './hydronote/template/hydronote/'],
+	    os.path.join(BASE_DIR, 'hydronote/template/hydronote'),
+	    os.path.join(BASE_DIR, 'hydronote/template'),
+	    os.path.join(BASE_DIR, 'templates'),
+	],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

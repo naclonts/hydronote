@@ -3,14 +3,14 @@ var app = angular.module('NoteApp', [
     'ui.tinymce'
 ]);
 
-app.constant('BASE_URL', 'http://127.0.0.1:8000/hydronote/api/notes/');
+app.constant('BASE_URL', 'api/notes/');
 
 
 app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     // Set CSRF token cookies to match Django's defaults
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
-    
+
     // Set head so Django understands POST format
     $httpProvider.defaults.headers.post['CONTENT-TYPE'] =
         'application/x-www-form-urlencoded';
