@@ -20,9 +20,9 @@
             <li class="menu-item"><a href="#">settings</a></li>
             <div id="user-info">{% if user.is_authenticated %}
                 <li>{{ user.username }}</li>
-                <li><a class="log-link" href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
+                <li><a class="log-link" href="{% url 'hydronote:logout'%}?next={{request.path}}">Logout</a></li>
                 {% else %}
-                <li><a class="log-link" href="{% url 'login'%}?next={{request.path}}">Login</a></li>
+                <li><a class="log-link" href="{% url 'hydronote:login'%}?next={{request.path}}">Login</a></li>
                 {% endif %}
             </div>
         </ul>

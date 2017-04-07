@@ -16,7 +16,7 @@
 
 <div class="form-page">
 <div class="form" id="login-form">
-    <form method="post" action="{% url 'login' %}">
+    <form method="post" action="{% url 'hydronote:login' %}">
         {% csrf_token %}
         <div class="form-entry">
             <td>{{ form.username.label_tag }}</td>
