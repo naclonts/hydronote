@@ -1,21 +1,44 @@
-// Set up About pop-up handling on page load
-window.onload = function() {
-    var modal = document.getElementById('about-popup');
-    var about = document.getElementById('about-link');
-    var close = document.getElementsByClassName('close')[0];
-    
-    about.addEventListener('click', function() {
-        modal.style.display = 'block';
-    });
-    
-    close.addEventListener('click', function() {
+// Modal pop-up interactions
+
+var modalIsUp = false;
+
+function closeModals() {
+    if (!modalIsUp) return;
+
+    var modals = document.getElementsByClassName('modal');
+
+    for (var i=0; i < modals.length; i++) {
+        var modal = modals[i];
         modal.style.display = 'none';
-    });
+    }
+    modalIsUp = false;
+}
+
+function popUpModal(id) {
+    var modal = document.getElementById(id);
+    modal.style.display = 'block';
+    modalIsUp = true;
+}
+
+// Set up modal pop-up handling on page load
+window.addEventListener('load', function() {
+    var aboutLink = document.getElementById('about-link');
+    
+    aboutLink.addEventListener('click', function() {
+        popUpModal('about-popup')
+    }, false);
+    
+    var closeButtons = document.getElementsByClassName('close');
+    for (var i=0; i < closeButtons.length; i++) {
+        closeButtons[i].addEventListener('click', closeModals, false);
+    }
     
     window.addEventListener('click', function(event) {
-        if (event.target == modal) {
-            modal.style.display = 'none';
+        // If a modal is being clicked out of , exit
+        // (the if statement prevents immediate closing as soon as link is clicked)
+        if (event.target.className.split(' ').indexOf('modal') > -1) {
+            closeModals();
         }
     });
-};
+}, false);
 

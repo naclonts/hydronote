@@ -3,6 +3,7 @@
 
 {% block extended_head %}
 <head>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="{% static 'css/form-page.css' %}">
 </head>
 {% endblock %}
@@ -10,10 +11,39 @@
 
 {% block content %}
 
+
+<!--
+
+    "About" modal pop-up 
+    <div id="about-popup" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>About hydronote</h3>
+            <p>hydronote is a lightweight note-taking application built with Django and AngularJS, using the Django Rest Framework as a RESTful API.<br><br>hydronote can be used without creating an account, but it is highly recommended to <a href="/hydronote/add_user/">make a (free!) account</a> to ensure your notes are saved from one session to the next.</p>
+        </div>
+    </div>
+-->
+
+<!--    After successful account creation, display Django success message here -->
+{% if messages %}
+<div id="account-created-popup" class="modal">
+    <div class="messages modal-content">
+        <span class="close">&times;</span>
+        <h3>Great job!</h3>
+        {% for message in messages %}
+        <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}<br><br></p>
+        {% endfor %}
+    </div>
+</div>
+<script>popUpModal('account-created-popup');</script>
+{% endif %}
+
+<!-- Alert if the login didn't work -->
 {% if form.errors %}
 <p>Your username and password didn't match. Please try again.</p>
 {% endif %}
 
+<!-- Login form -->
 <div class="form-page">
 <div class="form" id="login-form">
     <form method="post" action="{% url 'hydronote:login' %}">

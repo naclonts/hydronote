@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.conf import settings
 from django.contrib.auth import login
 from django.contrib.auth.models import User
+from django.contrib import messages
 from django.http import Http404
 
 from rest_framework import generics, permissions, status
@@ -27,10 +28,11 @@ def index(request):
 
 def add_user(request):
     """Account creation view. Routes to login page on success."""
-    if request.method == "POST":
+    if request.method == 'POST':
         form = UserForm(request.POST)
         if form.is_valid():
             new_user = User.objects.create_user(**form.cleaned_data)
+            messages.success(request, 'Your account has been successfully created. Very nice!')
             return HttpResponseRedirect('/hydronote/accounts/login')
 
     else:
