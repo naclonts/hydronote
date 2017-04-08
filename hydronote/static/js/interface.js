@@ -36,7 +36,7 @@ window.addEventListener('load', function() {
     window.addEventListener('click', function(event) {
         // If a modal is being clicked out of , exit
         // (the if statement prevents immediate closing as soon as link is clicked)
-        if (event.target.className.split(' ').indexOf('modal') > -1) {
+        if (modalIsUp && event.target.className.split(' ').indexOf('modal') > -1) {
             closeModals();
         }
     });
