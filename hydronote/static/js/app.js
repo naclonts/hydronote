@@ -56,14 +56,68 @@ app.service('Notes', function($http, BASE_URL) {
 
 app.controller('mainController', function($scope, Notes, $state) {
     $scope.currentNote = {};
+    $scope.expandedTagList = [];
+    $scope.noteTitleList = [];
     
     // Refresh list of notes 
     updateList = function() {
         return Notes.all().then(function(res) {
-            $scope.notes = res.data;
+            // Sort by tag, then display notes with expanded tags or no tags
+            res.data.sort(function(a, b) {
+                if (a.tags == null) return 1;
+                if (b.tags == null) return -1;
+                if (a.tags.toUpperCase() < b.tags.toUpperCase()) {
+                    return -1;
+                } else {
+                    return 1;
+                }
+            });
+
+            $scope.noteTitleList = [];
+            for (var i=0; i < res.data.length; i++) {
+                if (!res.data[i].tags) { // doesn't have tag: always display
+                    $scope.noteTitleList.push({ title: res.data[i].note_title,
+                                                id: res.data[i].id,
+                                                type: 'untagged-note' });
+                } else { // does have tag: display if expanded
+                    var expanded = $scope.expandedTagList.indexOf(res.data[i].tags) > -1;
+                    // add tag name if not already in list
+                    if (i == 0 || res.data[i].tags != res.data[i-1].tags) {
+                        $scope.noteTitleList.push({ title: res.data[i].tags,
+                                                    id: 'tag-click:' + res.data[i].tags,
+                                                    type: 'tag',
+                                                    isExpanded: expanded });
+                    }
+                    // add note title if it's in an expanded tag
+                    if (expanded) {
+                        $scope.noteTitleList.push({ title: res.data[i].note_title,
+                                                    id: res.data[i].id,
+                                                    type: 'tagged-note' });
+                    }
+                }
+            }
         });
     };
     
+    // Click on an item (tag or note title) in the list
+    $scope.listSelect = function(listID) {
+        var s = listID.split(':');
+        // A tag has been clicked: toggle category's expansion
+        if (s[0] == 'tag-click') {
+            var tag = s.slice(1).join(':'); // Rejoin tags that had a colon in them
+            tagIndex = $scope.expandedTagList.indexOf(tag);
+            if (tagIndex > -1) { // Remove from expandedTagList if already expanded
+                $scope.expandedTagList.splice(tagIndex, 1);
+            } else {
+                $scope.expandedTagList.push(tag);
+            }
+        // A Note has been clicked: select in editor
+        } else {
+            $scope.selectNote(listID);
+        }
+        updateList();
+    };
+
     // Select a note to begin editing 
     $scope.selectNote = function(id) {
         Notes.get(id).then(function(res) {
@@ -105,20 +159,21 @@ app.controller('mainController', function($scope, Notes, $state) {
         Notes.delete(id);
 
         // filter the note list to exclude the deleted item
-        $scope.notes = $scope.notes.filter(function(note) {
+        $scope.noteTitleList = $scope.noteTitleList.filter(function(note) {
             return note.id !== id;
         });
-        
+
         // create a fresh new note
         $scope.addNote();
         $scope.message = 'Note deleted';
     };
-    
+
     // On initial run, load the list of user's notes
     // TODO: select the last modified
     updateList().then($scope.addNote);
     
-    // Set up editor controls
+    
+    // Set up tinyMCE editor controls
     $scope.tinymceModel = "Write your note here!";
     
     tinySetup = function(ed) {

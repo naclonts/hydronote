@@ -4,9 +4,10 @@
     <section id="application-container">
         <!--    List of notes to choose from -->
         <div id="sidebar-container">
-            <ul class="sidebar-notelist" ng-repeat="note in notes">
-                <li><a href ng-click="selectNote(note.id)">{{ note.note_title
-                                ? note.note_title : '[Untitled]' }}</a></li>
+            <ul class="sidebar-notelist" ng-repeat="listItem in noteTitleList">
+                <li class="notelist-item notelist-{{listItem.type}}" bullet-symbol="{{listItem.isExpanded ? '-' : '+'}}">
+                    <a href ng-click="listSelect(listItem.id)">{{ listItem.title ? listItem.title : '[Untitled]' }}</a>
+                </li>
             </ul>
         </div>
 

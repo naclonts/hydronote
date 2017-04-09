@@ -89,6 +89,34 @@ body {
 }
 
 
+/* Note list sidebar */
+.sidebar-notelist {
+    padding-left: 2px;
+    margin-left: 2px;
+}
+
+.notelist-item {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.notelist-tag {
+    
+}
+.notelist-tag:before {
+    content: attr(bullet-symbol);
+    font-weight: bold;
+    padding: 0px 5px 0px 5px;
+/*    border: 1px solid blue;*/
+    text-align: center;
+}
+
+.notelist-tagged-note {
+    padding-left: 25px;
+}
+
+/* Note title and tags */
 #note-title {
     width: 50%;
 }
@@ -102,7 +130,6 @@ body {
     font-style: italic;
 }
 
-/* Note title and tags */
 .note-meta {
     font-size: 18px;
     appearance: none;
