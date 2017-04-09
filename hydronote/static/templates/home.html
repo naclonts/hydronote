@@ -13,8 +13,13 @@
         <!--    Editor and buttons    -->
         <div id="editor-container">
             <div id="input-control">
-            <!--    Note title -->
-                <input id="note-title" maxlength="40" type="text" ng-model="currentNote.note_title">
+                <div id="note-tags-and-text">
+                <!--    Note title -->
+                    <input id="note-title" class="note-meta" maxlength="40" type="text" ng-model="currentNote.note_title">
+
+                <!--    Note tag(s) -->
+                    <input id="note-tags" placeholder="Add a tag" class="note-meta" maxlength="40" type="text" ng-model="currentNote.tags">
+                </div>
 
             <!--    Create Note button -->
                 <button id="create-note" ng-click="addNote()">Create</button>

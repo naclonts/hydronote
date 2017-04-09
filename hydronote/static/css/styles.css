@@ -88,8 +88,22 @@ body {
     font-style: italic;
 }
 
+
 #note-title {
     width: 50%;
+}
+
+#note-tags {
+    width: 30%;
+    float: right;
+}
+#note-tags[value="Add a tag"] {
+    color: blue;
+    font-style: italic;
+}
+
+/* Note title and tags */
+.note-meta {
     font-size: 18px;
     appearance: none;
     box-shadow: none;
@@ -100,8 +114,8 @@ body {
     transition: border 1.5s;
 }
 
-#note-title:focus,
-#note-title.focus {
+.note-meta:focus,
+.note-meta.focus {
     border: solid 2px #969696;
 }
 
