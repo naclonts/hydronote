@@ -68,9 +68,8 @@ app.controller('mainController', function($scope, Notes, $state) {
                 if (b.tags == null) return -1;
                 if (a.tags.toUpperCase() < b.tags.toUpperCase()) {
                     return -1;
-                } else {
-                    return 1;
                 }
+                return 1;
             });
 
             $scope.noteTitleList = [];
@@ -99,7 +98,7 @@ app.controller('mainController', function($scope, Notes, $state) {
         });
     };
     
-    // Click on an item (tag or note title) in the list
+    // Handle click on an item (tag or note title) in the list
     $scope.listSelect = function(listID) {
         var s = listID.split(':');
         // A tag has been clicked: toggle category's expansion
