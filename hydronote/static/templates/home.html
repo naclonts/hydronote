@@ -14,7 +14,7 @@
         <div id="editor-container">
             <div id="input-control">
             <!--    Note title -->
-                <input id="note-title" type="text" ng-model="currentNote.note_title">
+                <input id="note-title" maxlength="40" type="text" ng-model="currentNote.note_title">
 
             <!--    Create Note button -->
                 <button id="create-note" ng-click="addNote()">Create</button>
