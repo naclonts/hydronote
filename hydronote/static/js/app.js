@@ -100,6 +100,7 @@ app.controller('mainController', function($scope, Notes, $state) {
         // If default new note is loaded (not in DB), skip
         if (!$scope.currentNote.id) return;
         
+        // Remove from database
         id = $scope.currentNote.id;
         Notes.delete(id);
 
@@ -143,12 +144,11 @@ app.controller('mainController', function($scope, Notes, $state) {
         // allow users to save even when no changes have been made in tinyMCE editor (since title might've been changed)
         save_enablewhendirty: false,
 
-        // Match up font/styling with the rest of page
+        // Match up styling with the rest of page
         content_css: stylesheetPath, 
         
         setup: function (ed) {
             ed.on('init', function(e) {
-                console.log('init called');
                 tinymce.activeEditor.contentDocument.body.style.backgroundColor = '#fff';
             });
         }
