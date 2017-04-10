@@ -132,7 +132,7 @@ app.controller('mainController', function($scope, Notes, $state) {
         $scope.message = '';
     };
 
-    // Save note on submission of tinyMCE form
+    // Save currently selected note on submission of tinyMCE form
     $scope.saveNote = function() {
         $scope.message = 'Note saved';
 
@@ -153,15 +153,17 @@ app.controller('mainController', function($scope, Notes, $state) {
         // If default new note is loaded (not in DB), skip
         if (!$scope.currentNote.id) return;
         
-        // Remove from database
-        id = $scope.currentNote.id;
-        Notes.delete(id);
-
-        // filter the note list to exclude the deleted item
-        $scope.noteTitleList = $scope.noteTitleList.filter(function(note) {
-            return note.id !== id;
-        });
-
+        // Move note to Trash (if not already)
+        var originalTag = $scope.currentNote.tags;
+        $scope.currentNote.tags = 'Trash';
+        $scope.saveNote();
+        
+        // If already in Trash, delete from database
+        if (originalTag == 'Trash') {
+            id = $scope.currentNote.id;
+            Notes.delete(id).then(updateList);
+        }
+        
         // create a fresh new note
         $scope.addNote();
         $scope.message = 'Note deleted';
@@ -173,12 +175,7 @@ app.controller('mainController', function($scope, Notes, $state) {
     
     
     // Set up tinyMCE editor controls
-    $scope.tinymceModel = "Write your note here!";
-    
-    tinySetup = function(ed) {
-        console.log("coloring....");
-        ed.getBody().style.backgroundColor = '#fff';
-    };
+    $scope.tinymceModel = '';
     $scope.tinymceOptions = {
         theme: 'modern',
         resize: 'both',
