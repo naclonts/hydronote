@@ -1,8 +1,6 @@
 body {
     font-family: "Open Sans",Arial,sans-serif;
-    font-size: 16px;
-/*    background: hsl(238, 27%, 67%);  */
-/*    background: linear-gradient(to left, hsl(238, 13%, 80%), hsl(238, 4%, 90%));*/
+    font-size: 1.0em;
 }
 
 
@@ -145,38 +143,38 @@ body {
     border: solid 2px #969696;
 }
 
-#create-note, #delete-note {
+.editor-button {
     height: 40px;
     vertical-align: middle;
+    font-size: 1.2em;
+    text-decoration: none;
+    background: hsl(204, 76%, 28%);
+    color: #efefef;
     box-shadow: 1px;
     border: none;
+    border-radius: 0px;
+}
+
+#save-note {
+    width: 40%;
 }
 
 #create-note {
     width: 30%;
-  background: #11537e;
-  border-radius: 0px;
-  color: #efefef;
-  font-size: 18px;
-  text-decoration: none;
 }
 
-#create-note:hover {
-  background: #3cb0fd;
-  text-decoration: none;
+#create-note:hover, #save-note:hover {
+    background: hsl(204, 100%, 56%);
+    text-decoration: none;
 }
 
 #delete-note {
-  background: #11537e;
-  border-radius: 0px;
-  color: #efefef;
-  font-size: 18px;
-  text-decoration: none;
+    width: 20%;
 }
 
 #delete-note:hover {
-  background: #ef653b;
-  text-decoration: none;
+    background: #ea2f0d;
+    text-decoration: none;
 }
 
 #login-form {

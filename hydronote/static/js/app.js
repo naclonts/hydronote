@@ -62,8 +62,10 @@ app.controller('mainController', function($scope, Notes, $state) {
     // Refresh list of notes 
     updateList = function() {
         return Notes.all().then(function(res) {
-            // Sort by tag, then display notes with expanded tags or no tags
+            // Sort by tag
             res.data.sort(function(a, b) {
+                if (a.tags == 'Trash') return 1;    // Put Trash tag at bottom
+                if (b.tags == 'Trash') return -1;
                 if (a.tags == null) return 1;
                 if (b.tags == null) return -1;
                 if (a.tags.toUpperCase() < b.tags.toUpperCase()) {
@@ -72,6 +74,7 @@ app.controller('mainController', function($scope, Notes, $state) {
                 return 1;
             });
 
+            // Display titles of notes with expanded tags or no tags, as well as any tag names
             $scope.noteTitleList = [];
             for (var i=0; i < res.data.length; i++) {
                 if (!res.data[i].tags) { // doesn't have tag: always display
