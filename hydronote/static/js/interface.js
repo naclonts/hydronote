@@ -67,3 +67,5 @@ function modalSetup() {
     });
 }
 
+// Add onload (hack: need to call modalSetup here and in Angular app due to AngularJS BS)
+window.addEventListener('load', modalSetup);
