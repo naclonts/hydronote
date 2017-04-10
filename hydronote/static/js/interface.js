@@ -1,4 +1,6 @@
-// Modal pop-up interactions
+///////////////////////////////
+// Modal pop-up interactions //
+///////////////////////////////
 
 var modalIsUp = false;
 
@@ -14,20 +16,43 @@ function closeModals() {
     modalIsUp = false;
 }
 
-function popUpModal(id) {
-    var modal = document.getElementById(id);
+function popUpModal(elementId) {
+    var modal = document.getElementById(elementId);
     modal.style.display = 'block';
     modalIsUp = true;
 }
 
+
+// elementId: ID of deletion modal dialog
+// deleteCallback: function to call when user confirms permanent delete
+function deleteDialog(elementId, deleteCallback) {
+    var modal = document.getElementById(elementId);
+    modal.style.display = 'block';
+    modalIsUp = true;
+    
+    document.getElementById('delete-modal-cancel').addEventListener('click', function() {
+        closeModals();
+    }, false);
+    
+    var deleteConfirm = document.getElementById('delete-modal-confirm');
+    var deleteHandler = function() {
+        // remove event listener to prevent double-delete cases
+        deleteConfirm.removeEventListener('click', deleteHandler, false);
+        deleteCallback();
+        closeModals();
+    }
+    deleteConfirm.addEventListener('click', deleteHandler, false);
+}
+
+
 // Set up modal pop-up handling on page load
-window.addEventListener('load', function() {
+function modalSetup() {
     var aboutLink = document.getElementById('about-link');
     
     aboutLink.addEventListener('click', function() {
         popUpModal('about-popup')
     }, false);
-    
+
     var closeButtons = document.getElementsByClassName('close');
     for (var i=0; i < closeButtons.length; i++) {
         closeButtons[i].addEventListener('click', closeModals, false);
@@ -40,5 +65,5 @@ window.addEventListener('load', function() {
             closeModals();
         }
     });
-}, false);
+}
 

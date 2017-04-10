@@ -104,6 +104,7 @@ body {
 }
 .notelist-tag:before {
     content: attr(bullet-symbol);
+    font-size: 1.2em;
     font-weight: bold;
     padding: 0px 5px 0px 5px;
     text-align: center;
@@ -112,6 +113,7 @@ body {
 .notelist-tagged-note {
     padding-left: 25px;
 }
+
 
 /* Note title and tags */
 #note-title {
@@ -143,7 +145,9 @@ body {
     border: solid 2px #969696;
 }
 
-.editor-button {
+
+/* Editor buttons (Save, Create, Delete) and buttons in pop-ups */
+.editor-button, .modal-button {
     height: 40px;
     vertical-align: middle;
     font-size: 1.2em;
@@ -163,7 +167,7 @@ body {
     width: 30%;
 }
 
-#create-note:hover, #save-note:hover {
+#create-note:hover, #save-note:hover, .cancel-button:hover {
     background: hsl(204, 100%, 56%);
     text-decoration: none;
 }
@@ -172,9 +176,8 @@ body {
     width: 20%;
 }
 
-#delete-note:hover {
+#delete-note:hover, .confirm-delete-button:hover {
     background: #ea2f0d;
-    text-decoration: none;
 }
 
 #login-form {
@@ -202,10 +205,22 @@ body {
     background-color: rgba(0,0,0,0.4);
 }
 
+/*
+#input-control {
+    text-align: justify;
+}
+
+#input-control:after {
+    content: "";
+    width: 100%;
+    display: inline-block;
+}
+*/
+
 .modal-content {
     background-color: #fefefe;
-    margin: 15% auto;
     padding: 20px;
+    margin: 15% auto;
     border: 1px solid #888;
     width: 80%;
 }
@@ -224,3 +239,22 @@ body {
     cursor: pointer;
 }
 
+.modal-button-container {
+    width: 60%;
+    margin: 0 auto;
+    text-align: justify;
+}
+.modal-button-container:after {
+    content: "";
+    width: 100%;
+    display: inline-block;
+}
+
+.modal-button {
+    width: 40%;
+    display: inline-block;
+}
+
+.confirm-delete-button {
+    background-color: dimgrey;
+}

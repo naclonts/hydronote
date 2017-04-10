@@ -1,6 +1,4 @@
-<body ng-controller="mainController">
-<!--    <div id="message-area"><p id="message-text">{{ message }}</p></div>-->
-    
+<body ng-controller="mainController">    
     <section id="application-container">
         <!--    List of notes to choose from -->
         <div id="sidebar-container">
@@ -36,6 +34,18 @@
             </div>     
                 
         </div>
-    </section>
 
+        <!--    Popup to confirm irreversible Delete -->
+        <div id="delete-popup" class="modal">
+            <div class="modal-content">
+                <span id="delete-close" class="close">&times;</span>
+                <h3>Are you sure?</h3>
+                <p>Would you like to permanently, irreversibly, indubitably delete this note?</p>
+                <div class="modal-button-container">
+                    <button id="delete-modal-cancel" class="cancel-button modal-button">Cancel</button>
+                    <button id="delete-modal-confirm" class="confirm-delete-button modal-button">Delete</button>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>

@@ -161,21 +161,24 @@ app.controller('mainController', function($scope, Notes, $state) {
         $scope.currentNote.tags = 'Trash';
         $scope.saveNote();
         
-        // If already in Trash, delete from database
+        // If already in Trash, ask if user would like to delete from database
         if (originalTag == 'Trash') {
-            id = $scope.currentNote.id;
-            Notes.delete(id).then(updateList);
+            var id = $scope.currentNote.id;
+            deleteDialog('delete-popup', function() {
+                Notes.delete(id).then(updateList);
+                // create a fresh new note
+                $scope.addNote();
+            });
+        } else { // If just moved to trash, create a fresh note
+            $scope.addNote();
         }
         
-        // create a fresh new note
-        $scope.addNote();
         $scope.message = 'Note deleted';
     };
 
-    // On initial run, load the list of user's notes
-    // TODO: select the last modified
+    // On initial run, load the list of user's notes and set up modals
     updateList().then($scope.addNote);
-    
+    modalSetup();
     
     // Set up tinyMCE editor controls
     $scope.tinymceModel = '';
