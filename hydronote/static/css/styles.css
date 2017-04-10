@@ -99,16 +99,15 @@ body {
 
 .notelist-item a {
     text-decoration: none;
-    color: #666666;
+    color: hsl(204, 76%, 20%);
 }
 
-.notelist-tag {
-    
-}
 .notelist-tag:before {
     content: attr(bullet-symbol);
     font-size: 1.2em;
+    font-family: monospace;
     font-weight: bold;
+    color: hsl(204, 40%, 28%);
     padding: 0px 5px 0px 5px;
     text-align: center;
 }
@@ -150,6 +149,10 @@ body {
 
 
 /* Editor buttons (Save, Create, Delete) and buttons in pop-ups */
+#editor-button-container {
+    padding-top: 5px;
+    width: 100%;
+}
 .editor-button, .modal-button {
     height: 40px;
     vertical-align: middle;
@@ -160,6 +163,9 @@ body {
     box-shadow: 1px;
     border: none;
     border-radius: 0px;
+    margin-top: 5px;
+    -webkit-transition: background-color 0.22s;
+    transition: background-color 0.22s;
 }
 
 #save-note {
@@ -172,7 +178,6 @@ body {
 
 #create-note:hover, #save-note:hover, .cancel-button:hover {
     background: hsl(204, 100%, 56%);
-    text-decoration: none;
 }
 
 #delete-note {
