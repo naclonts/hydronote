@@ -24,7 +24,7 @@ body {
     margin: 0 0 15px;
     padding: 15px;
     box-sizing: border-box;
-    font-size: 14px;
+    font-size: 1em;
 }
 .form button {
     text-transform: uppercase;
@@ -34,7 +34,7 @@ body {
     border: 0;
     padding: 15px;
     color: #FFFFFF;
-    font-size: 14px;
+    font-size: 1em;
     -webkit-transition: all 0.3 ease;
     transition: all 0.3 ease;
     cursor: pointer;
@@ -46,7 +46,7 @@ body {
     margin: 15px 0 0;
     padding-top: 60px;
     color: #b3b3b3;
-    font-size: 12px;
+    font-size: 0.9em;
 }
 #create-or-lost a {
     color: hsl(226, 50%, 67%);
@@ -72,13 +72,13 @@ body {
 .container .info h1 {
     margin: 0 0 15px;
     padding: 0;
-    font-size: 36px;
+    font-size: 3em;
     font-weight: 300;
     color: #1a1a1a;
 }
 .container .info span {
     color: #4d4d4d;
-    font-size: 12px;
+    font-size: 1em;
 }
 .container .info span a {
     color: #000000;
