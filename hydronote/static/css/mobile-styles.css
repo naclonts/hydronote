@@ -1,0 +1,20 @@
+
+@media (max-width: 650px) {
+    #title {
+        margin: 18px 10px 10px 5px;
+        font-size: 2em;
+    }
+    #notelist-button {
+        display: block;
+    }
+    #application-container {
+        padding: 2px;
+    }
+    #editor-container {
+        margin-left: 0%;
+        padding: 0px;
+    }
+    #sidebar-container {
+        clear:both;
+    }
+}
