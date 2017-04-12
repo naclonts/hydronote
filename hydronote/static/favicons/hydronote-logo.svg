@@ -1,0 +1,17 @@
+<svg version="1.1"
+     baseProfile="full"
+     width="324" height="324"
+     xmlns="http://www.w3.org/2000/svg">
+
+    <font>
+        <font-face font-family="Ubuntu"></font-face>
+    </font>
+
+    <circle cx="160" cy="160" r="152" style="fill-opacity: 0; stroke: #666666; stroke-width: 16px;" />
+    <circle cx="267" cy="53" r="32" style="fill-opacity: 1; fill: #666666;" />
+
+    <text x="162" y="250" font-size="260" text-anchor="middle" fill="#666666" font-family="Ubuntu">
+        h
+    </text>
+
+</svg>
