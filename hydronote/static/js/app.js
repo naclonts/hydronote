@@ -176,9 +176,9 @@ app.controller('mainController', function($scope, Notes, $state) {
         $scope.message = 'Note deleted';
     };
 
-    // On initial run, load the list of user's notes and set up modals
+    // On initial run, load the list of user's notes and set up event listeners (for modal and menu handing)
     updateList().then($scope.addNote);
-    modalSetup();
+    eventListenerSetup();
     
     // Set up tinyMCE editor controls
     $scope.tinymceModel = '';

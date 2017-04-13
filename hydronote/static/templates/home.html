@@ -1,7 +1,7 @@
 <body ng-controller="mainController">    
     <section id="application-container">
         <!--    List of notes to choose from -->
-        <div id="sidebar-container">
+        <div id="notelist-container" class="menu-popup">
             <ul class="sidebar-notelist" ng-repeat="listItem in noteTitleList">
                 <li class="notelist-item notelist-{{listItem.type}}" bullet-symbol="{{listItem.isExpanded ? '-' : '+'}}">
                     <a href ng-click="listSelect(listItem.id)">{{ listItem.title ? listItem.title : '[Untitled]' }}</a>
@@ -12,7 +12,7 @@
         <!--    Editor and buttons    -->
         <div id="editor-container">
             <div id="input-control">
-                <div id="note-tags-and-text">
+                <div id="note-title-and-tags">
                 <!--    Note title -->
                     <input id="note-title" class="note-meta" maxlength="40" type="text" ng-model="currentNote.note_title">
 

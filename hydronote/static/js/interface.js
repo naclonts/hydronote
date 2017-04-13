@@ -3,6 +3,7 @@
 ///////////////////////////////
 
 var modalIsUp = false;
+var menuIsUp = false;
 
 function closeModals() {
     if (!modalIsUp) return;
@@ -50,7 +51,7 @@ function modalSetup() {
     var aboutLink = document.getElementById('about-link');
     
     aboutLink.addEventListener('click', function() {
-        popUpModal('about-popup')
+        popUpModal('about-popup');
     }, false);
 
     var closeButtons = document.getElementsByClassName('close');
@@ -67,5 +68,35 @@ function modalSetup() {
     });
 }
 
+
+///////////////////////////////
+// Menu interactions         //
+///////////////////////////////
+function menuSetup() {
+    var notelistButton = document.getElementById('notelist-button');
+    
+    notelistButton.addEventListener('click', function(event) {
+        // Only open menu and stop event propogation if menu is currently closed
+        if (!menuIsUp) {
+            document.getElementById('notelist-container').style.display = 'block';
+            event.stopPropagation();
+            menuIsUp = true;
+        }
+    }, false);
+
+    window.addEventListener('click', function(event) {
+        if (menuIsUp) {
+            document.getElementById('notelist-container').style.display = 'none';
+            menuIsUp = false;
+        }
+    }, false);
+}
+
+
+function eventListenerSetup() {
+    modalSetup();
+    menuSetup();
+}
+
 // Add onload (hack: need to call modalSetup here and in Angular app due to AngularJS BS)
-window.addEventListener('load', modalSetup);
+window.addEventListener('load', eventListenerSetup);

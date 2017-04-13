@@ -1,20 +1,44 @@
 
-@media (max-width: 650px) {
+@media screen and (max-width: 650px) {
     #title {
-        margin: 18px 10px 10px 5px;
-        font-size: 2em;
+        margin: 24px 10px 10px 5px;
+        font-size: 1.5em;
     }
+
     #notelist-button {
         display: block;
     }
+    
     #application-container {
         padding: 2px;
     }
+    
     #editor-container {
         margin-left: 0%;
         padding: 0px;
     }
-    #sidebar-container {
-        clear:both;
+    
+    /* Display: none to hide by default. Set to block display in JS. */
+    #notelist-container {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        box-shadow: 0px 1px 5px;
+        border: 1px solid #4b4b4b;
+        
+        width: 80%;
+        background-color: #666666;
+        
+    }
+    #notelist-container a, .notelist-tag:before {
+        color: white;
+    }
+
+    
+    
+    
+    /* Evenly distribute CRUD buttons */
+    #create-note, #delete-note, #save-note {
+        width: 30%;
     }
 }
