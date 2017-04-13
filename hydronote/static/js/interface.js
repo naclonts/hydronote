@@ -98,5 +98,5 @@ function eventListenerSetup() {
     menuSetup();
 }
 
-// Add onload (hack: need to call modalSetup here and in Angular app due to AngularJS BS)
+// Add onload (hack: need to call setup here and in Angular app due to AngularJS loading BS)
 window.addEventListener('load', eventListenerSetup);

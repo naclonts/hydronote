@@ -69,7 +69,7 @@ body {
     padding: 5px;
 }
 
-#notelist-container {
+.menu-popup {
     width: 20%;
     height: auto;
     float: left;

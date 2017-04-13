@@ -19,7 +19,7 @@
     }
     
     /* Display: none to hide by default. Set to block display in JS. */
-    #notelist-container {
+    .menu-popup {
         display: none;
         position: fixed;
         z-index: 1;
