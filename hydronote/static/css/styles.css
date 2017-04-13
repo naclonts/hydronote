@@ -12,6 +12,11 @@ body {
     float: left;
 }
 
+#title a {
+    text-decoration: none;
+    color: inherit;
+}
+
 #menu-container {
     background-color: #666666;
     color: white;
