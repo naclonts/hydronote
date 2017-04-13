@@ -102,7 +102,7 @@ app.controller('mainController', function($scope, Notes, $state) {
     };
     
     // Handle click on an item (tag or note title) in the list
-    $scope.listSelect = function(listID) {
+    $scope.listSelect = function(listID, $event) {
         var s = listID.split(':');
         // A tag has been clicked: toggle category's expansion
         if (s[0] == 'tag-click') {
@@ -113,6 +113,8 @@ app.controller('mainController', function($scope, Notes, $state) {
             } else {
                 $scope.expandedTagList.push(tag);
             }
+            // Stop event propogation to prevent menu from being exited
+            $event.stopPropagation();
         // A Note has been clicked: select in editor
         } else {
             $scope.selectNote(listID);
