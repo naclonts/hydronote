@@ -3,7 +3,7 @@
 ///////////////////////////////
 
 var modalIsUp = false;
-var menuIsUp = false;
+var menuCurrentlyOpen = '';
 
 function closeModals() {
     if (!modalIsUp) return;
@@ -82,32 +82,68 @@ function menuSetup() {
 
 function screenSizeChange(mq) {
     var notelistButton = document.getElementById('notelist-button');
+    var optionsButton = document.getElementById('options-button');
+
+    // Small-screen views
     if (mq.matches) {
-        notelistButton.addEventListener('click', openMenu, false);
-        window.addEventListener('click', closeMenu, false);
+        notelistButton.addEventListener('click', function(event) {
+            openPopupMenu('notelist-container', event)
+        }, false);
+        optionsButton.addEventListener('click', function(event) {
+            openPopupMenu('options-container', event)
+        }, false);
+        window.addEventListener('click', closeMenus, false);
+        // start out with menus closed
+        closeMenus();
+    // Return to wide-screen views
     } else {
-        openMenu();
-        notelistButton.removeEventListener('click', openMenu, false);
-        window.removeEventListener('click', closeMenu, false);
+        notelistButton.removeEventListener('click', openPopupMenu, false);
+        optionsButton.removeEventListener('click', openPopupMenu, false);
+        window.removeEventListener('click', closeMenus, false);
+        displayAllMenus();
+        menuCurrentlyOpen = '';
     }
 }
 
-function openMenu(event) {
-    // Only open menu and stop event propogation if menu is currently closed
-    if (!menuIsUp) {
-        document.getElementById('notelist-container').style.display = 'block';
-        if (event) event.stopPropagation();
-        menuIsUp = true;
+// Display pop-up menu for element "id"
+// event: optional event to stop propogating and avoid immediate close
+function openPopupMenu(id, event) {
+    // if it's already open and button is clicked, let it close
+    if (id == menuCurrentlyOpen) return;
+    
+    // close currently active menus, then display the selected one
+    closeMenus();
+    
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.style.display = 'block';
+    if (event) event.stopPropagation();
+    menuCurrentlyOpen = id;
+}
+
+// For return to full-width screen
+function displayAllMenus() {
+    var menus = document.getElementsByClassName('menu-popup');
+
+    for (var i=0; i < menus.length; i++) {
+        var menu = menus[i];
+        menu.style.display = 'block';
     }
 }
 
-function closeMenu(event) {
-    if (menuIsUp) {
-        document.getElementById('notelist-container').style.display = 'none';
-        menuIsUp = false;
+// Close all the pop-up menus
+function closeMenus(event) {
+    var menus = document.getElementsByClassName('menu-popup');
+
+    for (var i=0; i < menus.length; i++) {
+        var menu = menus[i];
+        menu.style.display = 'none';
     }
+    menuCurrentlyOpen = '';
+    if (event) event.stopPropagation();
 }
 
+// Set up modal and responsive menu interfaces
 function eventListenerSetup() {
     modalSetup();
     menuSetup();

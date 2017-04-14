@@ -1,14 +1,17 @@
-
 @media screen and (max-width: 650px) {
-    #title {
-        margin: 24px 10px 10px 5px;
-        font-size: 1.5em;
-    }
-
-    #notelist-button {
-        display: block;
+    #menu-container {
+        height: 60px;
     }
     
+    #title {
+        margin: 15px 10px 5px 5px;
+        font-size: 1.75em;
+    }
+
+    .menu-item {
+        vertical-align: middle;
+    }
+
     #application-container {
         padding: 2px;
     }
@@ -18,24 +21,33 @@
         padding: 0px;
     }
     
-    /* Display: none to hide by default. Set to block display in JS. */
-    .menu-popup {
+    #notelist-button, #options-button {
+        display: block;
+        font-size: 1.5em;
+        margin-top: 5px;
+    }
+    
+    /* Display: none to hide by default. Will be set to block display in JS on button clicks. */
+    #notelist-container, #options-container {
         display: none;
         position: fixed;
+        left: 10px;
+        top: 70px;
         z-index: 1;
         box-shadow: 0px 1px 5px;
         border: 1px solid #4b4b4b;
         
         width: 80%;
         background-color: #666666;
-        
     }
+    
+    #options-container li {
+        clear: left;
+    }
+
     #notelist-container a, .notelist-tag:before {
         color: white;
     }
-
-    
-    
     
     /* Evenly distribute CRUD buttons */
     #create-note, #delete-note, #save-note {

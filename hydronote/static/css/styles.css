@@ -3,11 +3,14 @@ body {
     font-size: 1.0em;
 }
 
+li {
+    list-style: none;
+}
 
 /* Menu */
 #title {
-    margin: 10px 10px 10px 20px;
-    font-size: 3em;
+    margin: 13px 10px 0px 10px;
+    font-size: 2.5em;
     padding: 0px;
     float: left;
 }
@@ -18,14 +21,17 @@ body {
 }
 
 #menu-container {
+    display: flex;
+    justify-content: space-between;
     background-color: #666666;
     color: white;
-    padding: 0px;
+    padding-top: 0px;
+    margin-top: 0px;
     height: 72px;
+    width: 100%;
 }
 
-#menu-list {
-    list-style-type: none;
+#options-container {
     margin: 0;
     padding: 0;
 }
@@ -33,6 +39,7 @@ body {
 
 .menu-item {
     float: left;
+    list-style: none;
 }
 
 .menu-item a {
@@ -45,14 +52,8 @@ body {
 }
 
 /* Display ☰ only in mobile version*/
-#notelist-button {
+#notelist-button, #options-button {
     display: none;
-}
-
-#user-info {
-    float: right;
-    margin: 15px 20px 0px 0px;
-    list-style: none;
 }
 
 .log-link:link {
@@ -62,14 +63,13 @@ body {
     color: #d1d1d1;
 }
 
-
 #application-container {
     background: #e3e3e3;
     margin: auto;
     padding: 5px;
 }
 
-.menu-popup {
+#notelist-container {
     width: 20%;
     height: auto;
     float: left;
@@ -153,7 +153,7 @@ body {
     box-shadow: none;
     border-radius: 0px;
 
-    padding: 10px 0px 10px 0px;
+    padding: 10px 0px 10px 2px;
     border: solid 2px #c9c9c9;
     transition: border 1.5s;
 }
@@ -180,8 +180,8 @@ body {
     border: none;
     border-radius: 0px;
     margin-top: 5px;
-    -webkit-transition: background-color 0.22s;
-    transition: background-color 0.22s;
+    -webkit-transition: background-color 0.15s;
+    transition: background-color 0.15s;
 }
 
 #save-note {
