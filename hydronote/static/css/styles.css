@@ -3,7 +3,7 @@ body {
     font-size: 1.0em;
 }
 
-li {
+.menu-item {
     list-style: none;
 }
 
