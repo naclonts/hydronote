@@ -186,8 +186,8 @@ app.controller('mainController', function($scope, Notes, $state) {
     $scope.tinymceModel = '';
     $scope.tinymceOptions = {
         theme: 'modern',
-        resize: 'both',
-        height: '400px',
+        resize: true,
+        height: '350px',
         background: 'white',
         
         plugins: [
