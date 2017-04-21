@@ -3,10 +3,6 @@ body {
     font-size: 1.0em;
 }
 
-.menu-item {
-    list-style: none;
-}
-
 /* Menu */
 #title {
     margin: 13px 10px 0px 10px;
@@ -40,20 +36,33 @@ body {
 .menu-item {
     float: left;
     list-style: none;
-}
-
-.menu-item a {
-    display: block;
-    color: white;
     text-align: center;
     padding: 14px 16px;
     margin: 15px 20px 0px 0px;
+}
+
+.menu-item > a {
+    display: block;
+    color: white;
+    text-align: center;
     text-decoration: none;
 }
 
-/* Display ☰ only in mobile version*/
-#notelist-button, #options-button {
-    display: none;
+/* Login/Logout and username */
+.user-info {
+    padding: 0;
+}
+
+.log-line {
+    list-style: none;
+}
+
+.log-line:first-child {
+    margin-bottom: 5px;
+}
+
+.log-link {
+    text-decoration: none;
 }
 
 .log-link:link {
@@ -62,6 +71,12 @@ body {
 .log-link:visited {
     color: #d1d1d1;
 }
+
+/* Display ☰ only in mobile version*/
+#notelist-button, #options-button {
+    display: none;
+}
+
 
 #application-container {
     background: #e3e3e3;
@@ -162,8 +177,7 @@ body {
     transition: border 1.5s;
 }
 
-.note-meta:focus,
-.note-meta.focus {
+.note-meta:focus, .note-meta.focus {
     border: solid 2px #969696;
 }
 
