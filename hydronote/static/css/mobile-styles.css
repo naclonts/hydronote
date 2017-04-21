@@ -4,12 +4,13 @@
     }
     
     #title {
-        margin: 15px 10px 5px 5px;
+        margin: 0 0 0 5px;
         font-size: 1.75em;
     }
 
     .menu-item {
         vertical-align: middle;
+        margin: 0;
     }
 
     #application-container {
@@ -23,8 +24,7 @@
     
     #notelist-button, #options-button {
         display: block;
-        font-size: 1.5em;
-        margin-top: 5px;
+        font-size: 1.5em;/
     }
     
     /* Display: none to hide by default. Will be set to block display in JS on button clicks. */
