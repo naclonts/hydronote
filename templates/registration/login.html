@@ -12,18 +12,6 @@
 {% block content %}
 
 
-<!--
-
-    "About" modal pop-up 
-    <div id="about-popup" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h3>About hydronote</h3>
-            <p>hydronote is a lightweight note-taking application built with Django and AngularJS, using the Django Rest Framework as a RESTful API.<br><br>hydronote can be used without creating an account, but it is highly recommended to <a href="/hydronote/add_user/">make a (free!) account</a> to ensure your notes are saved from one session to the next.</p>
-        </div>
-    </div>
--->
-
 <!--    After successful account creation, display Django success message here -->
 {% if messages %}
 <div id="account-created-popup" class="modal">
@@ -44,7 +32,7 @@
 {% endif %}
 
 <!-- Login form -->
-<div class="form-page">
+<div class="form-container">
 <div class="form" id="login-form">
     <form method="post" action="{% url 'hydronote:login' %}">
         {% csrf_token %}

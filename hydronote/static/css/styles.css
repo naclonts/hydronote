@@ -204,16 +204,6 @@ body {
     background: #ea2f0d;
 }
 
-#login-form {
-    width: 100%;
-    float: left;
-}
-
-#login-button {
-    float: left;
-}
-
-
 
 /* Modal "About" pop-up */
 .modal {
