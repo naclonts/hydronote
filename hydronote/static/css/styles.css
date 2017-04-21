@@ -196,8 +196,9 @@ body {
     width: 30%;
 }
 
-#create-note:hover, #save-note:hover, .cancel-button:hover {
-    background: hsl(204, 100%, 56%);
+#create-note:hover, #save-note:hover, .cancel-button:hover,
+#create-note:active, #save-note:active, .cancel-button:active {
+    background: hsl(204, 100%, 50%);
 }
 
 #delete-note {
@@ -205,7 +206,7 @@ body {
 }
 
 #delete-note:hover, .confirm-delete-button:hover {
-    background: #ea2f0d;
+    background: #ff0000;
 }
 
 
