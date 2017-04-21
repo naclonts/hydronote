@@ -15,14 +15,23 @@
         <div class="form-entry">
             <td>{{ form.username.label_tag }}</td>
             <td>{{ form.username }}</td>
+            {% for error in form.username.errors %}
+                <p class="error-message">{{ error }}</p>
+            {% endfor %}
         </div>
         <div class="form-entry">
             <td>{{ form.email.label_tag }}</td>
             <td>{{ form.email }}</td>
+            {% for error in form.email.errors %}
+                <p class="error-message">{{ error }}</p>
+            {% endfor %}
         </div>
         <div class="form-entry">
             <label for="password">Password:</label>
             <input id="password" type="password" name="password" />
+            {% for error in form.password.errors %}
+                <p class="error-message">{{ error }}</p>
+            {% endfor %}
         </div>
         <button type="submit" value="Create new account">Create new account</button>
     </form>

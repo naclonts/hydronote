@@ -1,11 +1,10 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.template import loader
 from django.shortcuts import render
 from django.conf import settings
 from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.contrib import messages
-from django.http import Http404
 
 from rest_framework import generics, permissions, status
 from rest_framework.decorators import list_route

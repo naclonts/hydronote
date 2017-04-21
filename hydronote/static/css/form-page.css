@@ -113,3 +113,10 @@ body {
 .container .info span .fa {
     color: #EF3B3A;
 }
+
+.error-message {
+    font-size: 1em;
+    color: #954949;
+    font-style: italic;
+    margin: 5px;
+}
