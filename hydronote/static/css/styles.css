@@ -123,6 +123,10 @@ body {
     text-align: center;
 }
 
+.notelist-tag a {
+    font-weight: bold;
+}
+
 .notelist-tagged-note {
     padding-left: 25px;
 }
