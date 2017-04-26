@@ -15,7 +15,7 @@ body {
 
 #title a {
     text-decoration: none;
-    color: inherit;
+    color: hsl(204, 100%, 97%);
 }
 
 #menu-container {
@@ -23,7 +23,7 @@ body {
     justify-content: space-between;
     align-items: center;
     background-color: #666666;
-    color: white;
+    color: hsl(204, 100%, 97%);
     height: 72px;
     width: 100%;
 }
@@ -43,9 +43,9 @@ body {
 
 .menu-item > a {
     display: block;
-    color: white;
     text-align: center;
     text-decoration: none;
+    color: hsl(204, 100%, 97%);
 }
 
 /* Login/Logout and username */
