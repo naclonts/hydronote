@@ -1,6 +1,8 @@
 body {
     font-family: "Open Sans",Arial,sans-serif;
     font-size: 1.0em;
+    margin: 0;
+    padding: 0;
 }
 
 /* Menu */
