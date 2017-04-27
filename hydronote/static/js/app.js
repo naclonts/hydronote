@@ -14,7 +14,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     // Set head so Django understands POST format
     $httpProvider.defaults.headers.post['CONTENT-TYPE'] =
         'application/x-www-form-urlencoded';
-    
+
     // Set up templating URLs
     $stateProvider
         .state('home', {
@@ -22,18 +22,18 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
             templateUrl: '/static/templates/home.html',
             controller: 'mainController'
         });
-    
+
     $urlRouterProvider.otherwise('/');
 });
 
 
 app.service('Notes', function($http, BASE_URL) {
     var Notes = {};
-            
+
     Notes.all = function() {
         return $http.get(BASE_URL);
     };
-    
+
     Notes.get = function(id) {
         return $http.get(BASE_URL + id + '/');
     };
@@ -58,20 +58,25 @@ app.controller('mainController', function($scope, Notes, $state) {
     $scope.currentNote = {};
     $scope.expandedTagList = [];
     $scope.noteTitleList = [];
-    
-    // Refresh list of notes 
+
+    // Refresh list of notes
     updateList = function() {
         return Notes.all().then(function(res) {
             // Sort by tag
             res.data.sort(function(a, b) {
                 if (a.tags == 'Trash') return 1;    // Put Trash tag at bottom
                 if (b.tags == 'Trash') return -1;
-                if (a.tags == null) return 1;
-                if (b.tags == null) return -1;
-                if (a.tags.toUpperCase() < b.tags.toUpperCase()) {
+
+                // If no tags, just compare alphbetically
+                if (a.tags == null && b.tags == null) {
+                    return a.sort_index < b.sort_index ? -1 : 1;
+                } else if (a.tags == null) {
+                    return 1;
+                } else if (b.tags == null) {
                     return -1;
+                } else { // Both items have tags
+                    return a.tags.toUpperCase() < b.tags.toUpperCase() ? -1 : 1;
                 }
-                return 1;
             });
 
             // Display titles of notes with expanded tags or no tags, as well as any tag names
@@ -100,7 +105,7 @@ app.controller('mainController', function($scope, Notes, $state) {
             }
         });
     };
-    
+
     // Handle click on an item (tag or note title) in the list
     $scope.listSelect = function(listID, $event) {
         var s = listID.split(':');
@@ -122,18 +127,18 @@ app.controller('mainController', function($scope, Notes, $state) {
         updateList();
     };
 
-    // Select a note to begin editing 
+    // Select a note to begin editing
     $scope.selectNote = function(id) {
         Notes.get(id).then(function(res) {
             $scope.currentNote = res.data;
         });
     };
-    
+
     // Create a blank note object (with no ID) and assign to $scope.currentNote
     $scope.addNote = function() {
         newNote = { note_title: 'A New Note',
                     note_text: '<i>Inspired thoughts go here!<i>' };
-        $scope.currentNote = newNote;        
+        $scope.currentNote = newNote;
         $scope.message = '';
     };
 
@@ -157,12 +162,12 @@ app.controller('mainController', function($scope, Notes, $state) {
     $scope.deleteNote = function() {
         // If default new note is loaded (not in DB), skip
         if (!$scope.currentNote.id) return;
-        
+
         // Move note to Trash (if not already)
         var originalTag = $scope.currentNote.tags;
         $scope.currentNote.tags = 'Trash';
         $scope.saveNote();
-        
+
         // If already in Trash, ask if user would like to delete from database
         if (originalTag == 'Trash') {
             var id = $scope.currentNote.id;
@@ -174,14 +179,14 @@ app.controller('mainController', function($scope, Notes, $state) {
         } else { // If just moved to trash, create a fresh note
             $scope.addNote();
         }
-        
+
         $scope.message = 'Note deleted';
     };
 
     // On initial run, load the list of user's notes and set up event listeners (for modal and menu handing)
     updateList().then($scope.addNote);
     eventListenerSetup();
-    
+
     // Set up tinyMCE editor controls
     $scope.tinymceModel = '';
     $scope.tinymceOptions = {
@@ -189,23 +194,23 @@ app.controller('mainController', function($scope, Notes, $state) {
         resize: true,
         height: '350px',
         background: 'white',
-        
+
         plugins: [
           'advlist autolink link lists charmap preview hr anchor pagebreak',
           'searchreplace wordcount visualchars code fullscreen insertdatetime nonbreaking emoticons template paste textcolor save'
         ],
-        
+
         toolbar: 'save undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | forecolor backcolor emoticons',
-        
-        // Call save function when editor's Save button is clicked 
+
+        // Call save function when editor's Save button is clicked
         save_onsavecallback: function() { $scope.saveNote(); },
 
         // allow users to save even when no changes have been made in tinyMCE editor (since title might've been changed)
         save_enablewhendirty: false,
 
         // Match up styling with the rest of page
-        content_css: stylesheetPath, 
-        
+        content_css: stylesheetPath,
+
         setup: function (ed) {
             ed.on('init', function(e) {
                 tinymce.activeEditor.contentDocument.body.style.backgroundColor = '#fff';

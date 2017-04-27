@@ -1,4 +1,4 @@
-<body ng-controller="mainController">    
+<body ng-controller="mainController">
     <section id="application-container">
         <!--    List of notes to choose from -->
         <div id="notelist-container" class="menu-popup">
@@ -19,7 +19,7 @@
                 <!--    Note tag(s) -->
                     <input id="note-tags" placeholder="Add a tag" class="note-meta" maxlength="40" type="text" ng-model="currentNote.tags">
                 </div>
-                
+
             <!--    Note editing area (tinyMCE WYSIWYG editor) -->
                 <textarea id="editor" ui-tinymce="tinymceOptions" ng-model="currentNote.note_text"></textarea>
 
@@ -31,8 +31,8 @@
 
             <!--    Delete selected note button -->
                 <button id="delete-note" class="editor-button" ng-click="deleteNote()" >Delete</button>
-            </div>     
-                
+            </div>
+
         </div>
 
         <!--    Popup to confirm irreversible Delete -->
