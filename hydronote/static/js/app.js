@@ -54,7 +54,7 @@ app.service('Notes', function($http, BASE_URL) {
 });
 
 
-app.controller('mainController', function($scope, Notes, $state) {
+app.controller('mainController', function($scope, Notes, $state, $q) {
     $scope.currentNote = {};
     $scope.expandedTagList = [];
     $scope.noteTitleList = [];
@@ -74,7 +74,10 @@ app.controller('mainController', function($scope, Notes, $state) {
                     return 1;
                 } else if (b.tags == null) {
                     return -1;
-                } else { // Both items have tags
+                // Both items have tags
+                } else if (a.tags == b.tags) {
+                    return a.sort_index < b.sort_index ? -1 : 1;
+                } else {  // Each has different tags
                     return a.tags.toUpperCase() < b.tags.toUpperCase() ? -1 : 1;
                 }
             });
@@ -85,7 +88,9 @@ app.controller('mainController', function($scope, Notes, $state) {
                 if (!res.data[i].tags) { // doesn't have tag: always display
                     $scope.noteTitleList.push({ title: res.data[i].note_title,
                                                 id: res.data[i].id,
-                                                type: 'untagged-note' });
+                                                index: res.data[i].sort_index,
+                                                type: 'untagged-note',
+                                                tag: '' });
                 } else { // does have tag: display if expanded
                     var expanded = $scope.expandedTagList.indexOf(res.data[i].tags) > -1;
                     // add tag name if not already in list
@@ -99,7 +104,9 @@ app.controller('mainController', function($scope, Notes, $state) {
                     if (expanded) {
                         $scope.noteTitleList.push({ title: res.data[i].note_title,
                                                     id: res.data[i].id,
-                                                    type: 'tagged-note' });
+                                                    index: res.data[i].sort_index,
+                                                    type: 'tagged-note',
+                                                    tag: res.data[i].tags });
                     }
                 }
             }
@@ -184,14 +191,37 @@ app.controller('mainController', function($scope, Notes, $state) {
     };
 
     // Update order of notes on drop after dragging
-    $scope.updateOrder = function(id, coords) {
+    $scope.updateOrder = function(elem, y) {
+        if (elem.id.split(':')[0] == 'tag-click') return;
+        console.log('____' + elem.title + " y = " + y + ", i = " + elem.index);
 
+        var defer = $q.defer();
+
+        var matchingNotes = $scope.noteTitleList.filter(function(n) {
+            return n.tag == elem.tag;
+        }).sort(function(a, b) {
+            var elA = document.getElementById(a.id);
+            var elB = document.getElementById(b.id);
+            return elA.getBoundingClientRect().top - elB.getBoundingClientRect().top;
+        });
+        for (var i=0; i < matchingNotes.length; i++) {
+            console.log(matchingNotes[i].title + '=' + i);
+            matchingNotes[i].index = i;
+        }
+
+        var promises = matchingNotes.map(function(note) {
+            console.log('saving ' + note.title + ' i=' + note.index);
+            return Notes.get(note.id).then(function(res) {
+                        res.data.sort_index = note.index;
+                        return Notes.save(res.data);
+                    });
+        });
+        $q.all(promises).then(updateList);
     };
 
     // On initial run, load the list of user's notes and set up event listeners (for modal and menu handing)
     updateList().then($scope.addNote);
     eventListenerSetup();
-    draggable.init();
 
     // Set up tinyMCE editor controls
     $scope.tinymceModel = '';
@@ -234,8 +264,9 @@ app.directive('ngDraggable', function($document) {
             dragOptions: '=ngDraggable'
         },
         controller: function($scope, $element) {
-            var startX, startY, x = 0, y = 0,
-                    start, stop, drag, container;
+            var startX, startY, y = 0,
+                    start, stop, drag, container, timePressed,
+                    delay = 500;
 
             var width  = $element[0].offsetWidth,
                 height = $element[0].offsetHeight;
@@ -253,10 +284,11 @@ app.directive('ngDraggable', function($document) {
 
             // Bind mousedown event
             $element.on('mousedown', function(e) {
+                timePressed = Date.now();
                 e.preventDefault();
                 startX = e.clientX - $element[0].offsetLeft;
                 startY = e.clientY - $element[0].offsetTop;
-                console.log(startX + ", " + startY);
+                y = e.clientY;
                 $document.on('mousemove', mousemove);
                 $document.on('mouseup', mouseup);
                 if (start) start(e);
@@ -264,8 +296,8 @@ app.directive('ngDraggable', function($document) {
 
             // Handle drag event
             function mousemove(e) {
+                if (Date.now() - timePressed < delay) return;
                 y = e.clientY - startY;
-                x = e.clientX - startX;
                 setPosition();
                 if (drag) drag(e);
             }
@@ -274,18 +306,16 @@ app.directive('ngDraggable', function($document) {
             function mouseup(e) {
                 $document.unbind('mousemove', mousemove);
                 $document.unbind('mouseup', mouseup);
-                $scope.$parent.$parent.updateOrder($scope.$parent.listItem, {x: x, y: y});
                 if (stop) stop(e);
+
+                if (Date.now() - timePressed >= delay)
+                    $scope.$parent.$parent.updateOrder($scope.$parent.listItem, y);
+
             }
 
             // Move element, within container if provided
             function setPosition() {
                 if (container) {
-                    if (x < container.left) {
-                        x = container.left;
-                    } else if (x > container.right - width) {
-                        x = container.right - width;
-                    }
                     if (y < container.top) {
                         y = container.top;
                     } else if (y > container.bottom - height) {
@@ -296,7 +326,6 @@ app.directive('ngDraggable', function($document) {
                 $element.css({
                     position: 'absolute',
                     top: y + 'px',
-                    left: x + 'px'
                 });
             }
         }
