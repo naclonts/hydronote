@@ -183,9 +183,15 @@ app.controller('mainController', function($scope, Notes, $state) {
         $scope.message = 'Note deleted';
     };
 
+    // Update order of notes on drop after dragging
+    $scope.updateOrder = function(id, coords) {
+
+    };
+
     // On initial run, load the list of user's notes and set up event listeners (for modal and menu handing)
     updateList().then($scope.addNote);
     eventListenerSetup();
+    draggable.init();
 
     // Set up tinyMCE editor controls
     $scope.tinymceModel = '';
@@ -217,4 +223,82 @@ app.controller('mainController', function($scope, Notes, $state) {
             });
         }
     };
+});
+
+
+app.directive('ngDraggable', function($document) {
+    return {
+        require: 'mainController',
+        restrict: 'A',
+        scope: {
+            dragOptions: '=ngDraggable'
+        },
+        controller: function($scope, $element) {
+            var startX, startY, x = 0, y = 0,
+                    start, stop, drag, container;
+
+            var width  = $element[0].offsetWidth,
+                height = $element[0].offsetHeight;
+
+            // Obtain drag options
+            if ($scope.dragOptions) {
+                start  = $scope.dragOptions.start;
+                drag   = $scope.dragOptions.drag;
+                stop   = $scope.dragOptions.stop;
+                var id = $scope.dragOptions.container;
+                if (id) {
+                    container = document.getElementById(id).getBoundingClientRect();
+                }
+            }
+
+            // Bind mousedown event
+            $element.on('mousedown', function(e) {
+                e.preventDefault();
+                startX = e.clientX - $element[0].offsetLeft;
+                startY = e.clientY - $element[0].offsetTop;
+                console.log(startX + ", " + startY);
+                $document.on('mousemove', mousemove);
+                $document.on('mouseup', mouseup);
+                if (start) start(e);
+            });
+
+            // Handle drag event
+            function mousemove(e) {
+                y = e.clientY - startY;
+                x = e.clientX - startX;
+                setPosition();
+                if (drag) drag(e);
+            }
+
+            // Unbind drag events
+            function mouseup(e) {
+                $document.unbind('mousemove', mousemove);
+                $document.unbind('mouseup', mouseup);
+                $scope.$parent.$parent.updateOrder($scope.$parent.listItem, {x: x, y: y});
+                if (stop) stop(e);
+            }
+
+            // Move element, within container if provided
+            function setPosition() {
+                if (container) {
+                    if (x < container.left) {
+                        x = container.left;
+                    } else if (x > container.right - width) {
+                        x = container.right - width;
+                    }
+                    if (y < container.top) {
+                        y = container.top;
+                    } else if (y > container.bottom - height) {
+                        y = container.bottom - height;
+                    }
+                }
+
+                $element.css({
+                    position: 'absolute',
+                    top: y + 'px',
+                    left: x + 'px'
+                });
+            }
+        }
+    }
 });
