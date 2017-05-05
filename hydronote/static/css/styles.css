@@ -3,6 +3,7 @@ body {
     font-size: 1.0em;
     margin: 0;
     padding: 0;
+    height: 100vh;
 }
 
 /* Menu */
@@ -76,15 +77,20 @@ body {
 
 /* Big containers */
 #application-container {
+    position: relative;
     background: #e3e3e3;
     margin: auto;
     padding: 5px;
+    height: 100%;
+    border-bottom: 3px double #666;
 }
 
 #notelist-container {
+    position: absolute;
     width: 20%;
-    height: auto;
-    float: left;
+    overflow: auto;
+    top: 0;
+    bottom: 0;
     background: #f7f7f7;
 }
 
