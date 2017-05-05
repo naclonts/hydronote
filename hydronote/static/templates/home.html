@@ -4,8 +4,10 @@
         <div id="notelist-container" class="menu-popup">
             <ul class="sidebar-notelist" ng-repeat="listItem in noteTitleList">
                 <li class="notelist-item notelist-{{listItem.type}}"
-                    bullet-symbol="{{listItem.isExpanded ? '-' : '+'}}">
-                    <a href id="{{listItem.id}}" ng-click="listSelect(listItem.id, $event)" ng-draggable>
+                    bullet-symbol="{{listItem.isExpanded ? '-' : '+'}}"
+                    ng-click="listSelect(listItem.id, $event)"
+                    ng-draggable>
+                    <a href id="{{listItem.id}}" >
                         {{ listItem.title ? listItem.title : '[Untitled]' }}</a>
                 </li>
             </ul>

@@ -2,7 +2,7 @@
     #menu-container {
         height: 60px;
     }
-    
+
     #title {
         margin: 0 0 0 5px;
         font-size: 1.75em;
@@ -16,29 +16,29 @@
     #application-container {
         padding: 2px;
     }
-    
+
     #editor-container {
         margin-left: 0%;
         padding: 0px;
     }
-    
+
     #notelist-button, #options-button {
         display: block;
         font-size: 1.5em;/
     }
-    
+
     /* Display: none to hide by default. Will be set to block display in JS on button clicks. */
     #notelist-container, #options-container {
         display: none;
         position: absolute;
-        left: 10px;
-        top: 70px;
+        left: 1px;
+        top: 62px;
         z-index: 10;
         border: 1px solid #4b4b4b;
         width: 80%;
         background-color: #666666;
     }
-    
+
     #options-container li {
         clear: left;
     }
@@ -46,7 +46,7 @@
     #notelist-container a, .notelist-tag:before {
         color: white;
     }
-    
+
     /* Evenly distribute CRUD buttons */
     #create-note, #delete-note, #save-note {
         width: 30%;

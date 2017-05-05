@@ -110,14 +110,18 @@ body {
 
 /* Note list sidebar */
 .sidebar-notelist {
-    padding-left: 2px;
-    margin-left: 2px;
+    padding: 0;
+    margin: 0;
 }
 
 .notelist-item {
     list-style-type: none;
-    padding: 0;
+    padding: 10px 0;
     margin: 0;
+}
+.notelist-item:hover, .notelist-item:active {
+    background-color: #bbb;
+    border: 1px solid hsl(203, 75%, 31%);
 }
 
 .notelist-item a {
