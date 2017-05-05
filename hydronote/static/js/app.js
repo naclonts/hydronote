@@ -186,17 +186,14 @@ app.controller('mainController', function($scope, Notes, $state, $q) {
         } else { // If just moved to trash, create a fresh note
             $scope.addNote();
         }
-
         $scope.message = 'Note deleted';
     };
 
     // Update order of notes on drop after dragging
     $scope.updateOrder = function(elem, y) {
-        if (elem.id.split(':')[0] == 'tag-click') return;
-        console.log('____' + elem.title + " y = " + y + ", i = " + elem.index);
-
         var defer = $q.defer();
 
+        // Get notes with same tag and sort by current location
         var matchingNotes = $scope.noteTitleList.filter(function(n) {
             return n.tag == elem.tag;
         }).sort(function(a, b) {
@@ -204,13 +201,14 @@ app.controller('mainController', function($scope, Notes, $state, $q) {
             var elB = document.getElementById(b.id);
             return elA.getBoundingClientRect().top - elB.getBoundingClientRect().top;
         });
+
+        // Ensure indexes are consecutive, 0 through [number of notes]
         for (var i=0; i < matchingNotes.length; i++) {
-            console.log(matchingNotes[i].title + '=' + i);
             matchingNotes[i].index = i;
         }
 
+        // Save each note, then update list when complete
         var promises = matchingNotes.map(function(note) {
-            console.log('saving ' + note.title + ' i=' + note.index);
             return Notes.get(note.id).then(function(res) {
                         res.data.sort_index = note.index;
                         return Notes.save(res.data);
@@ -284,6 +282,13 @@ app.directive('ngDraggable', function($document) {
 
             // Bind mousedown event
             $element.on('mousedown', function(e) {
+                // If a tag was dragged, return to original location
+                // TODO: allow tags to be moved
+                var elem = $scope.$parent.listItem;
+                if (elem.id.split(':')[0] == 'tag-click') {
+                    return;
+                }
+
                 timePressed = Date.now();
                 e.preventDefault();
                 startX = e.clientX - $element[0].offsetLeft;
@@ -308,9 +313,10 @@ app.directive('ngDraggable', function($document) {
                 $document.unbind('mouseup', mouseup);
                 if (stop) stop(e);
 
-                if (Date.now() - timePressed >= delay)
+                // If has been held down long enough, move it
+                if (Date.now() - timePressed >= delay) {
                     $scope.$parent.$parent.updateOrder($scope.$parent.listItem, y);
-
+                }
             }
 
             // Move element, within container if provided
