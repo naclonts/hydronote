@@ -124,10 +124,13 @@ body {
     list-style-type: none;
     padding: 10px 0;
     margin: 0;
+    transition: 0.5s padding-left, 0.4s background-color;
 }
 .notelist-item:hover, .notelist-item:active {
     background-color: #bbb;
-    border: 1px solid hsl(203, 75%, 31%);
+    padding-left: 2em;
+    cursor: pointer;
+    transition: 1s padding-left;
 }
 
 .notelist-item a {
