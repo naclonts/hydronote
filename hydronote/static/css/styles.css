@@ -20,6 +20,7 @@ body {
 }
 
 #menu-container {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -62,10 +63,7 @@ body {
     text-decoration: none;
 }
 
-.log-link:link {
-    color: white;
-}
-.log-link:visited {
+.log-link:link, .log-link:visited {
     color: #d1d1d1;
 }
 

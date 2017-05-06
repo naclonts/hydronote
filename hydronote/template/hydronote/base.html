@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="A lightweight note application. Every device. No cost.">
-    
+
     <link rel="apple-touch-icon" sizes="180x180" href="{% static '/favicons/apple-touch-icon.png' %}">
     <link rel="icon" type="image/png" href="{% static '/favicons/favicon-32x32.png' %}" sizes="32x32">
     <link rel="icon" type="image/png" href="{% static '/favicons/favicon-16x16.png' %}" sizes="16x16">
@@ -14,13 +14,13 @@
     <meta name="theme-color" content="#ffffff">
 
     {% block title %}<title>hydronote</title>{% endblock %}
-    
+
     {% block extended_head %}{% endblock %}
 
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="{% static 'css/mobile-styles.css' %}">
 </head>
-    
+
 <body>
 <!--    Menu -->
     <nav id="menu-container">
@@ -41,6 +41,11 @@
                     </li>
                 {% else %}
                     <li class="log-line">
+                        <a class="log-link" href="{% url 'hydronote:add_user'%}?next={{request.path}}">
+                            Create an account
+                        </a>
+                    </li>
+                    <li class="log-line">
                         <a class="log-link" href="{% url 'hydronote:login'%}?next={{request.path}}">
                             Login
                         </a>
@@ -50,7 +55,7 @@
             </li>
         </ul>
     </nav>
-    
+
 <!--    "About" modal pop-up -->
     <div id="about-popup" class="modal">
         <div class="modal-content">
@@ -60,9 +65,9 @@
         </div>
     </div>
 </body>
-    
+
 <!-- Script for menu and modal UIs -->
 <script src="{% static 'js/interface.js' %}"></script>
-    
+
 {% block content %}{% endblock %}
 </html>

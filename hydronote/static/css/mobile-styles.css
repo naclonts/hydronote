@@ -39,6 +39,9 @@
         width: 80%;
         background-color: #666666;
     }
+    #options-container {
+        top: 61px;
+    }
 
     #options-container li {
         clear: left;
