@@ -10,7 +10,7 @@ class Note(models.Model):
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False,
         help_text="Unique ID")
-    note_text = models.CharField(max_length=10000)
+    note_text = models.TextField()
     note_title = models.CharField(max_length=40, null=True, blank=True)
     tags = models.CharField(max_length=40, null=True, blank=True)
     modified_date = models.DateTimeField('date modified', auto_now=True)
