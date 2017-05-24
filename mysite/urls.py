@@ -20,6 +20,6 @@ from django.contrib import admin
 
 # Route all the URLs to /hydronote/, since that's the base folder for the application
 urlpatterns = [
+    url(r'^hydronote/admin/', admin.site.urls),
     url(r'^hydronote/', include('hydronote.urls')),
-    url(r'^admin/', admin.site.urls),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
