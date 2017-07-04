@@ -132,17 +132,17 @@ app.controller('mainController', function($scope, Notes, $state, $q) {
 
     // Save currently selected note on submission of tinyMCE form
     $scope.saveNote = function() {
-        $scope.message = 'Note saved';
+        $scope.postMessage('Note saved');
 
         // If selected note already exists, update in database
         if ($scope.currentNote.hasOwnProperty('id')) {
-            Notes.save($scope.currentNote).then(function() {
+            return Notes.save($scope.currentNote).then(function() {
                 // Refresh from DB to ensure side list is updated
                 $scope.selectNote($scope.currentNote.id);
             });
         // If it's a brand new note (not yet in DB), add to database
         } else {
-            Notes.add($scope.currentNote).then(function(res) {
+            return Notes.add($scope.currentNote).then(function(res) {
                 $scope.currentNote = res.data;
                 $scope.noteData.push($scope.currentNote);
                 updateList(false);
@@ -158,9 +158,8 @@ app.controller('mainController', function($scope, Notes, $state, $q) {
         // Move note to Trash (if not already)
         if ($scope.currentNote.tags != 'Trash') {
             $scope.currentNote.tags = 'Trash';
-            $scope.saveNote();
-            // Create a fresh note
-            $scope.addNote();
+            // save in Trash then make a new one
+            $scope.saveNote().then($scope.addNote);
         // If already in Trash, ask if user would like to delete from database
         } else {
             var id = $scope.currentNote.id;
@@ -207,6 +206,11 @@ app.controller('mainController', function($scope, Notes, $state, $q) {
         $q.all(promises).then(function() {
             updateList(true); // update list with serer refresh
         });
+    };
+
+    // Update with message
+    $scope.postMessage = function(text) {
+        console.log(text);
     };
 
     // On initial run, load the list of user's notes and set up event listeners (for modal and menu handing)
