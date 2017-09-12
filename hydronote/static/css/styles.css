@@ -10,8 +10,13 @@ body {
 #title {
     margin: 0 0 0 10px;
     padding: 0;
-    font-size: 2.5em;
+    font-size: 1.5em;
+    font-weight: normal;
     float: left;
+}
+
+#title em {
+    font-weight: bold;
 }
 
 #title a {
