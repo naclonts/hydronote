@@ -202,9 +202,9 @@ body {
     text-decoration: none;
     background: hsl(204, 76%, 28%);
     color: #efefef;
-    box-shadow: 1px;
+    box-shadow: 1px 1px 1px 0px rgba(68, 68, 68, 0.57);
     border: none;
-    border-radius: 0px;
+    border-radius: 1px;
     margin-top: 5px;
     -webkit-transition: background-color 0.15s;
     transition: background-color 0.15s;
