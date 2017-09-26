@@ -103,7 +103,7 @@ body {
     padding: 5px;
 }
 
-#input-control {
+    #`-control {
     text-align: justify;
 }
 
@@ -186,7 +186,7 @@ body {
     box-shadow: none;
     border-radius: 0px;
 
-    padding: 10px 0px 10px 2px;
+    padding: 4px 0px 4px 2px;
     border: solid 2px #c9c9c9;
     transition: border 1.5s;
 }
